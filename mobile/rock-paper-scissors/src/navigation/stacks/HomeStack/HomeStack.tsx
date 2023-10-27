@@ -2,7 +2,7 @@ import React, {useLayoutEffect} from 'react';
 import {View} from "react-native";
 import {CardStyleInterpolators, createStackNavigator} from "@react-navigation/stack";
 import {HomeParamList} from "./HomeParamList";
-import {Lobby, Game, BotPick, GameHistory} from "../../../screens";
+import {Lobby, Game, Settings} from "../../../screens";
 import {getFocusedRouteNameFromRoute} from "@react-navigation/native";
 
 interface HomeStackProps {
@@ -39,9 +39,7 @@ export const HomeStack: React.FC<HomeStackProps> = ({ navigation, route }) => {
         >
             <Stack.Screen name={'Lobby'} component={Lobby} />
             <Stack.Screen name={'Game'} component={Game} />
-            <Stack.Screen name={'GameHistory'} component={GameHistory} />
-            <Stack.Screen name={'BotPick'} component={BotPick} />
-            {/*<Stack.Screen name={'Settings'} component={Settings} />*/}
+            <Stack.Screen name={'Settings'} component={Settings} />
         </Stack.Navigator>
     )
 }
