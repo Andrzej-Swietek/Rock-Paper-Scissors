@@ -1,6 +1,7 @@
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from dotenv import load_dotenv
+import subprocess
 
 
 from api import create_app
@@ -20,6 +21,13 @@ def runserver():
 @manager.command
 def runworker():
     app.run(debug=False)
+
+@manager.command
+def start_grpc_server():
+    """
+    Start the gRPC server.
+    """
+    subprocess.run(["python", "grpc_service/__init__.py"])
 
 if __name__ == "__main__":
     manager.run()
