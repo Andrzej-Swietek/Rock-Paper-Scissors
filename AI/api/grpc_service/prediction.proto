@@ -1,0 +1,17 @@
+# grpc_service/prediction.proto
+
+syntax = "proto3";
+
+package grpc_service;
+
+service Prediction {
+    rpc PredictWinner (Image) returns (PredictionResult);
+}
+
+message Image {
+    bytes data = 1;
+}
+
+message PredictionResult {
+    string winner = 1;
+}
