@@ -1,0 +1,68 @@
+version: "3.8"
+services:
+    backend:
+        container_name: backend
+        build:
+            context: ./backend
+            dockerfile: ../docker/backend/Dockerfile
+        ports:
+            - "5010:5010"
+        restart: always
+        volumes:
+            -   ./backend/src:/usr/src/app/src
+        links:
+            - redis
+        depends_on:
+            - redis
+            - ai
+    
+    frontend:
+        container_name: frontend
+        build:
+            context: frontend
+            dockerfile: ../docker/frontend/Dockerfile
+        ports:
+            - "8081:8081"
+        restart: always
+        volumes:
+            - ./frontend/pages:/usr/src/app/pages
+            - ./frontend/public:/usr/src/app/public
+            - ./frontend/shared:/usr/src/app/shared
+            - ./frontend/styles:/usr/src/app/styles
+
+    nginx:
+      container_name: http
+      restart: always
+      build:
+          context: ./nginx
+          dockerfile: ../docker/nginx/Dockerfile
+      ports:
+          - "8080:8080"
+      depends_on:
+          -   "backend"
+          -   "frontend"
+          -   "ai"
+    
+    ai:
+        container_name: ai
+        build:
+          context: ./AI
+          dockerfile: ../docker/ai/Dockerfile  
+        restart: always
+        ports:
+          - "50051:50051"
+
+    redis:
+      image: redis
+      container_name: redis
+      restart: always
+      build:
+        context: ./redis
+        dockerfile: ../docker/redis/Dockerfile
+      ports:
+        - "6379:6379"
+      volumes:
+        - redis-data:/var/lib/redis
+
+volumes:
+    redis-data:
