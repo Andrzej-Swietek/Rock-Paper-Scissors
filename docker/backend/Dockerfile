@@ -9,7 +9,6 @@ RUN yarn install
 
 RUN yarn add pm2 -g
 
-COPY . .
 
 EXPOSE 3030
 
