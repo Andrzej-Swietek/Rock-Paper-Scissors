@@ -48,9 +48,7 @@ export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobb
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
             />
-            <View style={{ height: WINDOW_HEIGHT/10 }}>
-
-            </View>
+            <View style={{ height: WINDOW_HEIGHT/10 }}></View>
         </View>
     );
 }

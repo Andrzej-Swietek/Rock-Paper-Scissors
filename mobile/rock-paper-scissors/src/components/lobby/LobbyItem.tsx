@@ -36,7 +36,7 @@ export const LobbyItem: FC<{ item: ILobbyItem }>= ({item})=> {
                 <MaterialCommunityIcons name="sword-cross" size={50} color="white" />
             </View>
             <View style={ styles.listItemDescription }>
-                <Text style={{ fontFamily: 'Roboto-Bold', color: SECONDARY, fontSize: FONT_SIZE_24 }}> { item.title } </Text>
+                <Text style={ styles.listItemDescriptionText }> { item.title } </Text>
             </View>
         </TouchableOpacity>
     )
@@ -85,4 +85,9 @@ export const LobbyItem: FC<{ item: ILobbyItem }>= ({item})=> {
          alignItems: 'center',
          padding: 10
      },
+     listItemDescriptionText: {
+         fontFamily: 'Roboto-Bold',
+         color: SECONDARY,
+         fontSize: FONT_SIZE_24
+     }
  })
