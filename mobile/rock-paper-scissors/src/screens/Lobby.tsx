@@ -4,20 +4,20 @@ import { HomeNavProps } from 'navigation/stacks/HomeStack/HomeParamList';
 import {View, Text, Image, StyleSheet, FlatList, ImageBackground, TouchableOpacity} from 'react-native';
 
 
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 import {
-    boxShadow, flex, FONT_SIZE_16,
-    FONT_SIZE_24,
+    boxShadow,
     FONT_SIZE_32,
     LIGHT, PRIMARY, SECONDARY,
     WINDOW_HEIGHT, WINDOW_WIDTH
 } from "shared/styles";
 
 import {AuthContext} from "shared/providers";
-import {AntDesign} from "@expo/vector-icons";
-import {Row} from "components/common";
 
+import {StatsHeader} from "components/common/StatsHeader";
+import {ILobbyItem, LobbyItem} from "components/lobby";
 
-type LobbyItem = { id: number, title: string, image: string, type?: 'option'|'header', onClick?: ()=>void  }
 
 interface LobbyProps extends HomeNavProps<'Lobby'> {}
 
@@ -25,44 +25,17 @@ export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobb
 
     const { logout, user } = useContext(AuthContext);
 
-    const lobbyItems: LobbyItem[] = [
+    const lobbyItems: ILobbyItem[] = [
         { id: 0, title: 'Game Modes',   type: 'header', image: '' },
         { id: 1, title: 'Play',  type: 'option', image: '', onClick: ()=> navigation.navigate("Game", { mode: 'pvp' } )},
-    ]
-
-    const calculateExp = () => {
-        const MAX_EXP: number = user.level * 100;
-        const progress: number = (user.exp+1 / MAX_EXP) * 100;
-        return Math.min(progress, 100);
-    };
+        { id: 2, title: 'Play',  type: 'option', image: '', onClick: ()=> navigation.navigate("Game", { mode: 'pvp' } )},
+        { id: 3, title: 'Play',  type: 'option', image: '', onClick: ()=> navigation.navigate("Game", { mode: 'pvp' } )},
+    ];
 
     return (
         <View style={styles.container}>
-            <View style={styles.statsHeader}>
-                <Text style={styles.nickname}> { user.username } </Text>
-                <Row>
-                    <AntDesign style={{marginTop: 10}} name={'star'} size={24} color={PRIMARY} />
-                    <Text style={{ marginTop: 10, marginRight: 10, fontWeight: "bold", fontSize: FONT_SIZE_16}}> { user.points } </Text>
-                    <View style={styles.progressContainer}>
-                        <View style={styles.progressBar}>
-                            <View
-                                style={{
-                                    width: `${calculateExp()}%`,
-                                    height: '100%',
-                                    backgroundColor: '#3498db',
-                                    borderRadius: 5,
-                                }}
-                            />
-                        </View>
-                    </View>
-                </Row>
 
-                <TouchableOpacity onPress={()=> logout()}>
-                    <AntDesign name={'logout'} size={24} color={PRIMARY} />
-                </TouchableOpacity>
-            </View>
-
-
+            <StatsHeader />
 
             <FlatList
                 style={{ width: '92%' }}
@@ -80,26 +53,6 @@ export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobb
             </View>
         </View>
     );
-}
-
-const LobbyItem = ({item})=> {
-    if ( item.type === 'header' ){
-        return (
-            <ImageBackground style={ [styles.listItem, styles.header, { height: WINDOW_HEIGHT/3, borderRadius: 15, overflow: 'hidden' }] } source={ require('../../assets/img/lobbyHeader.webp') }>
-                <Text style={ styles.headerText }>{ item.title }</Text>
-            </ImageBackground>
-        )
-    }
-    return (
-        <TouchableOpacity onPress={ ()=> item.onClick() } style={[styles.listItem, { height: WINDOW_HEIGHT/4, marginVertical: 10 }]}>
-            <View style={[ styles.listItemImage ]} >
-                {/*<Image style={{ aspectRatio: 1 }} resizeMode={'contain'} source={ item.image } />*/}
-            </View>
-            <View style={ styles.listItemDescription }>
-                <Text style={{ fontFamily: 'Roboto-Bold', color: SECONDARY, fontSize: FONT_SIZE_24 }}> { item.title } </Text>
-            </View>
-        </TouchableOpacity>
-    )
 }
 
 const styles = StyleSheet.create({
@@ -150,28 +103,5 @@ const styles = StyleSheet.create({
         backgroundColor: SECONDARY+'7d',
         color: LIGHT,
         borderRadius: 25
-    },
-    nickname: {
-        fontSize: FONT_SIZE_24,
-        fontWeight: "bold",
-        fontFamily: 'Roboto-Bold',
-    },
-    statsHeader: {
-        top: 20,
-        color: LIGHT,
-        width: WINDOW_WIDTH,
-        padding: 20,
-        ...flex("row", "nowrap", "space-between")
-    },
-    progressContainer: {
-        alignItems: 'center',
-        marginTop: 10,
-    },
-    progressBar: {
-        width: 100,
-        height: 10,
-        backgroundColor: '#bdc3c7', // Change the unfilled color as per your design
-        borderRadius: 5,
-        overflow: 'hidden',
     },
 })
