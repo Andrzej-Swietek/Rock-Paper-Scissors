@@ -16,7 +16,7 @@ import {
 import {AuthContext} from "shared/providers";
 
 import {StatsHeader} from "components/common/StatsHeader";
-import {ILobbyItem, LobbyItem} from "components/lobby";
+import {ILobbyItem, LobbyItem, LobbySlider} from "components/lobby";
 
 
 interface LobbyProps extends HomeNavProps<'Lobby'> {}
@@ -37,17 +37,41 @@ export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobb
 
             <StatsHeader />
 
-            <FlatList
-                style={{ width: '92%' }}
-                data={ lobbyItems }
-                renderItem={ ({item}) => <LobbyItem item={item} />}
-                keyExtractor={ (item) => item.id.toString() }
-                snapToAlignment="start"
-                decelerationRate={"fast"}
-                snapToInterval={WINDOW_HEIGHT*0.5}
-                showsVerticalScrollIndicator={false}
-                showsHorizontalScrollIndicator={false}
-            />
+            <LobbySlider modes={[
+                {
+                    id: '1',
+                    name: 'Mode 1',
+                    description: 'Description for Mode 1',
+                    screen: 'Mode1Screen',
+                    image: 'https://images.pling.com/img/00/00/62/69/92/1727023/epic-071.jpg',
+                },
+                {
+                    id: '2',
+                    name: 'Mode 2',
+                    description: 'Description for Mode 2',
+                    screen: 'Mode2Screen',
+                    image: 'https://images.pling.com/img/00/00/62/69/92/1727023/epic-071.jpg',
+                },
+                {
+                    id: '3',
+                    name: 'Mode 2',
+                    description: 'Description for Mode 2',
+                    screen: 'Mode2Screen',
+                    image: 'https://images.pling.com/img/00/00/62/69/92/1727023/epic-071.jpg',
+                },
+            ]} />
+
+            {/*<FlatList*/}
+            {/*    style={{ width: '92%' }}*/}
+            {/*    data={ lobbyItems }*/}
+            {/*    renderItem={ ({item}) => <LobbyItem item={item} />}*/}
+            {/*    keyExtractor={ (item) => item.id.toString() }*/}
+            {/*    snapToAlignment="start"*/}
+            {/*    decelerationRate={"fast"}*/}
+            {/*    snapToInterval={WINDOW_HEIGHT*0.5}*/}
+            {/*    showsVerticalScrollIndicator={false}*/}
+            {/*    showsHorizontalScrollIndicator={false}*/}
+            {/*/>*/}
             <View style={{ height: WINDOW_HEIGHT/10 }}></View>
         </View>
     );
