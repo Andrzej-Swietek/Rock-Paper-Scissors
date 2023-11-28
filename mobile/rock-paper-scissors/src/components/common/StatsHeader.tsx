@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
         width: WINDOW_WIDTH,
         padding: 20,
         paddingBottom: 30,
+        zIndex: 100,
         ...flex("row", "nowrap", "space-between")
     },
     progressContainer: {

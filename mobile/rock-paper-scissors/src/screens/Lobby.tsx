@@ -1,7 +1,7 @@
 import React, {FC, useContext} from 'react';
 
 import { HomeNavProps } from 'navigation/stacks/HomeStack/HomeParamList';
-import {View, Text, Image, StyleSheet, FlatList, ImageBackground, TouchableOpacity} from 'react-native';
+import {View, Text, Image, StyleSheet, FlatList, ImageBackground, TouchableOpacity, StatusBar} from 'react-native';
 
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -38,8 +38,10 @@ export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobb
             <StatsHeader />
 
             <LobbySlider modes={[
+                { id: 'left-spacer' , type: 'spacer'},
                 {
                     id: '1',
+                    type: 'normal',
                     name: 'Mode 1',
                     description: 'Description for Mode 1',
                     screen: 'Mode1Screen',
@@ -47,6 +49,7 @@ export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobb
                 },
                 {
                     id: '2',
+                    type: 'normal',
                     name: 'Mode 2',
                     description: 'Description for Mode 2',
                     screen: 'Mode2Screen',
@@ -54,11 +57,13 @@ export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobb
                 },
                 {
                     id: '3',
+                    type: 'normal',
                     name: 'Mode 2',
                     description: 'Description for Mode 2',
                     screen: 'Mode2Screen',
                     image: 'https://images.pling.com/img/00/00/62/69/92/1727023/epic-071.jpg',
                 },
+                { id: 'right-spacer' , type: 'spacer'},
             ]} />
 
             {/*<FlatList*/}
