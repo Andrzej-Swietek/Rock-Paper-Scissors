@@ -29,11 +29,11 @@ export const StatsHeader: FC<{}> = ({}) => {
 
     return (
         <View style={styles.statsHeader}>
-            <View style={{ marginTop: 10 }}>
+            <View style={{ marginTop: 0 }}>
                 <Text style={styles.nickname}> { user.username } </Text>
             </View>
             <Row>
-                <AntDesign style={{marginTop: 10}} name={'star'} size={24} color={PRIMARY} />
+                <AntDesign style={{marginTop: 0}} name={'star'} size={24} color={'PRIMARY'} />
                 <Text style={styles.points}> { user.points } </Text>
                 <View style={styles.progressContainer}>
                     <View style={styles.progressBar}>
@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
         fontSize: FONT_SIZE_24,
         fontWeight: "bold",
         fontFamily: 'Roboto-Bold',
+        color: '#fff'
     },
     statsHeader: {
         top: 20,
@@ -77,12 +78,13 @@ const styles = StyleSheet.create({
         width: WINDOW_WIDTH,
         padding: 20,
         paddingBottom: 30,
+        marginBottom: 20,
         zIndex: 100,
         ...flex("row", "nowrap", "space-between")
     },
     progressContainer: {
         alignItems: 'center',
-        marginTop: 10,
+        marginTop: 0,
     },
     progressBar: {
         width: 100,
@@ -92,9 +94,10 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
     points: {
-        marginTop: 10,
+        marginTop: 0,
         marginRight: 10,
         fontWeight: "bold",
-        fontSize: FONT_SIZE_16
+        fontSize: FONT_SIZE_16,
+        color: '#fff'
     }
 });

@@ -53,7 +53,7 @@ export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobb
                     name: 'Mode 2',
                     description: 'Description for Mode 2',
                     screen: 'Mode2Screen',
-                    image: 'https://images.pling.com/img/00/00/62/69/92/1727023/epic-071.jpg',
+                    image: 'https://images.pling.com/img/00/00/62/69/92/1727029/epic-091.jpg',
                 },
                 {
                     id: '3',
