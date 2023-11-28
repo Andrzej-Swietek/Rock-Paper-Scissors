@@ -88,7 +88,7 @@ export const LobbySlider: FC<LobbySliderProps> = ({ modes }) => {
                             >
                                 <Image source={{ uri: item.image }} style={styles.image} />
                                 <Text
-                                    style={{ fontSize: FONT_SIZE_24 }}
+                                    style={{ marginVertical: 10 ,fontSize: FONT_SIZE_24 }}
                                     numberOfLines={1}
                                 >
                                     { item.name }

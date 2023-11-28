@@ -1,7 +1,7 @@
 import React, {FC, useContext} from 'react';
 
 import { HomeNavProps } from 'navigation/stacks/HomeStack/HomeParamList';
-import {View, Text, Image, StyleSheet, FlatList, ImageBackground, TouchableOpacity, StatusBar} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -13,10 +13,12 @@ import {
     WINDOW_HEIGHT, WINDOW_WIDTH
 } from "shared/styles";
 
+// Contexts
 import {AuthContext} from "shared/providers";
 
+// Components
 import {StatsHeader} from "components/common/StatsHeader";
-import {ILobbyItem, LobbyItem, LobbySlider} from "components/lobby";
+import {LobbySlider} from "components/lobby";
 
 
 interface LobbyProps extends HomeNavProps<'Lobby'> {}
@@ -24,13 +26,6 @@ interface LobbyProps extends HomeNavProps<'Lobby'> {}
 export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobby'>) => {
 
     const { logout, user } = useContext(AuthContext);
-
-    const lobbyItems: ILobbyItem[] = [
-        { id: 0, title: 'Game Modes',   type: 'header', image: '' },
-        { id: 1, title: 'Play',  type: 'option', image: '', onClick: ()=> navigation.navigate("Game", { mode: 'pvp' } )},
-        { id: 2, title: 'Play',  type: 'option', image: '', onClick: ()=> navigation.navigate("Game", { mode: 'pvp' } )},
-        { id: 3, title: 'Play',  type: 'option', image: '', onClick: ()=> navigation.navigate("Game", { mode: 'pvp' } )},
-    ];
 
     return (
         <View style={styles.container}>
@@ -42,41 +37,33 @@ export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobb
                 {
                     id: '1',
                     type: 'normal',
-                    name: 'Mode 1',
+                    name: 'PvP',
                     description: 'Description for Mode 1',
                     screen: 'Mode1Screen',
                     image: 'https://images.pling.com/img/00/00/62/69/92/1727023/epic-071.jpg',
+                    goTo: ()=> navigation.navigate("Game", { mode: 'pvp' } )
                 },
                 {
                     id: '2',
                     type: 'normal',
-                    name: 'Mode 2',
-                    description: 'Description for Mode 2',
+                    name: '2 vs 2',
+                    description: 'Team up with another player',
                     screen: 'Mode2Screen',
                     image: 'https://images.pling.com/img/00/00/62/69/92/1727029/epic-091.jpg',
+                    goTo: ()=> navigation.navigate("Game", { mode: 'pvp' } )
                 },
                 {
                     id: '3',
                     type: 'normal',
-                    name: 'Mode 2',
-                    description: 'Description for Mode 2',
+                    name: 'PvE',
+                    description: 'Challenge a computer',
                     screen: 'Mode2Screen',
                     image: 'https://images.pling.com/img/00/00/62/69/92/1727023/epic-071.jpg',
+                    goTo: ()=> navigation.navigate("Game", { mode: 'pve' } )
                 },
                 { id: 'right-spacer' , type: 'spacer'},
             ]} />
 
-            {/*<FlatList*/}
-            {/*    style={{ width: '92%' }}*/}
-            {/*    data={ lobbyItems }*/}
-            {/*    renderItem={ ({item}) => <LobbyItem item={item} />}*/}
-            {/*    keyExtractor={ (item) => item.id.toString() }*/}
-            {/*    snapToAlignment="start"*/}
-            {/*    decelerationRate={"fast"}*/}
-            {/*    snapToInterval={WINDOW_HEIGHT*0.5}*/}
-            {/*    showsVerticalScrollIndicator={false}*/}
-            {/*    showsHorizontalScrollIndicator={false}*/}
-            {/*/>*/}
             <View style={{ height: WINDOW_HEIGHT/10 }}></View>
         </View>
     );

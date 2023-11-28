@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
         width: WINDOW_WIDTH,
         padding: 20,
         paddingBottom: 30,
-        marginBottom: 20,
+        // marginBottom: 20,  // TODO: RETHINK
         zIndex: 100,
         ...flex("row", "nowrap", "space-between")
     },
