@@ -1,6 +1,8 @@
 import type { Config } from 'tailwindcss'
+const withMT = require("@material-tailwind/react/utils/withMT");
 
-const config: Config = {
+
+const config: Config = withMT({
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -15,6 +17,8 @@ const config: Config = {
         "warning": "#FBBF24",
         "success": "#22C55E",
         "neutral": "#6A7181",
+        "light": "#f3f4f5",
+        "dark": "#1C1C1C",
         "primaryContainer": "#1C1C1C",
         "secondaryContainer": "#CEE6FF",
         "errorContainer": "#FFC9C9",
@@ -49,5 +53,5 @@ const config: Config = {
   plugins: [
     require('@tailwindcss/line-clamp'),
   ],
-}
+})
 export default config
