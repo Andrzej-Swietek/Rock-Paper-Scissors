@@ -33,7 +33,7 @@ const buttonStyleFactory = (variant: 'filled' | 'outlined' | 'text' | 'disabled'
     //variant style
     const filledStyle = `bg-primary focus:bg-primaryContainer focus:text-primary text-white hover:shadow-base`;
     const outlinedStyle = `text-primary border-primary hover:bg-primaryContainer focus:bg-primaryContainer bg-white border`;
-    const textStyle = `text-primary hover:bg-primaryContainer focus:bg-primaryContainer active:bg-primaryContainer`;
+    const textStyle = `text-primary hover:bg-primaryContainer hover:text-light focus:bg-primaryContainer active:bg-primaryContainer`;
     const disabledStyle = `!bg-[#eee] !text-neutral !cursor-default !border-none`;
 
     switch (variant){
