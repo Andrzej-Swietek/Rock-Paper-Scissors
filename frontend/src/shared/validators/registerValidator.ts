@@ -5,12 +5,9 @@ export const registerValidation = yup.object({
         .string()
         .email('Invalid email address')
         .required('Email is required'),
-    firstName: yup
+    nickname: yup
         .string()
-        .required('First Name is required'),
-    lastName: yup
-        .string()
-        .required('Last Name is required'),
+        .required('Nickname is required'),
     password: yup
         .string()
         .min(8, 'Password must be at least 8 characters')
