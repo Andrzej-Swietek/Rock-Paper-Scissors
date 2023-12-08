@@ -29,9 +29,9 @@ export const Login: React.FC<LoginProps> = ({}) => {
     return (
         <KeyboardAvoidingView style={styles.container}  behavior={Platform.OS === "ios" ? "padding" : "height"}>
             <View style={styles.header}>
-                <Text style={styles.headerText}> The </Text>
-                <Text style={[styles.headerText, styles.accent]}> Roman </Text>
-                <Text style={styles.headerText}> Game </Text>
+                <Text style={styles.headerText}> Rock </Text>
+                <Text style={[styles.headerText, styles.accent]}> Paper </Text>
+                <Text style={styles.headerText}> Scissors </Text>
             </View>
             <View style={styles.body}>
 

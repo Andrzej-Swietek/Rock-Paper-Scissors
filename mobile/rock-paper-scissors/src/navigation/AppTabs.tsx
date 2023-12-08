@@ -11,6 +11,7 @@ import {AppParamList} from "./AppParamList";
 // Independent Navigations Stacks
 import {HomeStack} from "./stacks/HomeStack/HomeStack";
 import {InfoStack} from "./stacks/InfoStack/InfoStack";
+import {UserStack} from "navigation/stacks/UserStack/UserStack";
 
 interface AppTabsProps {
 }
@@ -20,6 +21,7 @@ const Tabs  = createBottomTabNavigator<AppParamList>();
 export const AppTabs: React.FC<AppTabsProps> = ({}) => {
     type tab = { name: keyof AppParamList, component: ComponentType<any>, icon: keyof typeof AntDesign.glyphMap | any }
     const [ tabs, setTabs ] = useState<tab[]>([
+        { name: 'User', component: UserStack, icon: "user" },
         { name: 'Home', component: HomeStack, icon: "gamepad" },
         { name: 'Info', component: InfoStack, icon: "infocirlceo" },
     ])

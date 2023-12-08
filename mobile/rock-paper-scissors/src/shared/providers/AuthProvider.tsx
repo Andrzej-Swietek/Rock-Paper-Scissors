@@ -5,20 +5,8 @@ import {useAsyncStorage} from "shared/hooks";
 interface AuthProviderProps {
     children
 }
-type PointsPVP = {
-    gamesPlayed: number
-}
-type PointsOnline = {
-    wins: number,
-    loses: number
-}
 
-type PointsPVA = {
-    gamesPlayed: number,
-    wins: number
-}
-
-export type User = { username: string, pointsPvP: PointsPVP, pointsOnline: PointsOnline, pointsPvA: PointsPVA }
+export type User = { username: string, points: number,  gamesPlayed: number, level: number, exp: number }
 
 export const AuthContext = React.createContext<{
   user: User,
@@ -30,51 +18,31 @@ export const AuthContext = React.createContext<{
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useAsyncStorage<null | User>('user', null);
 
-  const updateScore = (gameType: 'pvp'|'pva'|'online', score: { gamesPlayed?: number, wins?: number, loses?: number  }) => {
-        switch ( gameType ){
-            case "online": {
-                setUser({...user, pointsOnline: { wins: score.wins, loses: score.loses } })
-                break;
-            }
-            case "pvp": {
-                setUser({...user, pointsPvP: { gamesPlayed: score.gamesPlayed || 0 } })
-                break;
-            }
-            case "pva": {
-                setUser({...user, pointsPvA: { gamesPlayed: score.gamesPlayed, wins: score.wins }})
-                break;
-            }
-        }
+  const updateScore = ( score: number ) => {
+      setUser( {...user, gamesPlayed: user.gamesPlayed+1, points: user.points + score })
   }
 
   return (
       <AuthContext.Provider value={{
         user,
-        login: async(username: string) => {
+        login: async(username: string): Promise<void> => {
          const u = JSON.parse( await AsyncStorage.getItem('user') )
           const userFromAPI: User = {
               username: username,
-              pointsPvP: {
-                  gamesPlayed: 0,
-              },
-              pointsOnline: {
-                  wins: 0,
-                  loses: 0
-              },
-              pointsPvA: {
-                  gamesPlayed: 0,
-                  wins: 0
-              },
+              points: 0,
+              gamesPlayed: 0,
+              level: 1,
+              exp: 0
           };
           setUser(u? u : userFromAPI)
           await AsyncStorage.setItem('user', JSON.stringify(userFromAPI))
         },
-        logout: async ()=> {
+        logout: async (): Promise<void> => {
           setUser(null)
           await AsyncStorage.removeItem('user')
         },
-        updateScore: (gameType: 'pvp'|'pva'|'online', score: { gamePlayed?: number, wins?: number, loses?: number  }) => {
-            updateScore(gameType, score);
+        updateScore: (score: number) => {
+            updateScore(score);
         }
       }}>
         { children }

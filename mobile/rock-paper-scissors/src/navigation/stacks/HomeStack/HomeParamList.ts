@@ -4,7 +4,7 @@ import {RouteProp} from "@react-navigation/native";
 export type HomeParamList = {
     Lobby: undefined;
     Game: {
-        mode: 'pva' | 'pvp' | 'online',
+        mode: 'pva' | 'pvp' | 'online' | 'pve',
     };
     Settings: undefined;
 }
