@@ -49,34 +49,34 @@ export const Profile: React.FC<SettingsProps> = ({ route, navigation }) => {
                         <View style={{ marginVertical: 10, marginBottom: 20,  flex: 1,  ...flex('column', 'nowrap', 'center', 'center') }}>
                             <Text style={{ paddingHorizontal: 20, color: LIGHT,  fontSize: FONT_SIZE_16, fontWeight: "bold", textAlign: 'left', width: '100%' }}> Gesture Stats: </Text>
                             <Row>
-                                <View style={{ flex: 1,  ...flex('column', 'nowrap', 'center', 'center') }}>
+                                <View style={styles.statsColumn}>
                                     <Image style={styles.statsIcon} source={require('../../assets/img/rock-icon.png')} />
-                                    <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_16, fontWeight: "bold" }}> 0 </Text>
-                                    <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_12, fontWeight: "bold" }}>  Rock  </Text>
+                                    <Text style={styles.gestureStatsValue}> 0 </Text>
+                                    <Text style={styles.gestureStatsName}>  Rock  </Text>
                                 </View>
-                                <View style={{ flex: 1,  ...flex('column', 'nowrap', 'center', 'center') }}>
+                                <View style={styles.statsColumn}>
                                     <Image style={styles.statsIcon} source={require('../../assets/img/paper-icon.png')} />
-                                    <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_16, fontWeight: "bold" }}> 0 </Text>
-                                    <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_12, fontWeight: "bold" }}>  Paper  </Text>
+                                    <Text style={styles.gestureStatsValue}> 0 </Text>
+                                    <Text style={styles.gestureStatsName}>  Paper  </Text>
                                 </View>
-                                <View style={{ flex: 1,  ...flex('column', 'nowrap', 'center', 'center') }}>
+                                <View style={styles.statsColumn}>
                                     <Image style={styles.statsIcon} source={require('../../assets/img/scissors-icon.png')} />
-                                    <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_16, fontWeight: "bold" }}> 0 </Text>
-                                    <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_12, fontWeight: "bold" }}>  Scissors  </Text>
+                                    <Text style={styles.gestureStatsValue}> 0 </Text>
+                                    <Text style={styles.gestureStatsName}>  Scissors  </Text>
                                 </View>
                             </Row>
                         </View>
                     </Row>
                     <Row>
-                        <View style={{ flex: 1,  ...flex('column', 'nowrap', 'center', 'center') }}>
+                        <View style={styles.statsColumn}>
                             <Text style={styles.statsTextValue}>{ user.gamesPlayed } </Text>
                             <Text style={styles.statsTextName}>  Games </Text>
                         </View>
-                        <View style={{ flex: 1,  ...flex('column', 'nowrap', 'center', 'center') }}>
+                        <View style={styles.statsColumn}>
                             <Text style={styles.statsTextValue}> { user.gamesPlayed }  </Text>
                             <Text style={styles.statsTextName}> Wins </Text>
                         </View>
-                        <View style={{ flex: 1,  ...flex('column', 'nowrap', 'center', 'center') }}>
+                        <View style={styles.statsColumn}>
                             <Text style={styles.statsTextValue}> { user.gamesPlayed } </Text>
                             <Text style={styles.statsTextName}> Win Ratio  </Text>
                         </View>
@@ -119,5 +119,14 @@ const styles = StyleSheet.create({
     },
     statsIcon: {
         width: 30, height: 30, marginVertical: 10,
+    },
+    gestureStatsName: {
+        color: LIGHT,  fontSize: FONT_SIZE_12, fontWeight: "bold"
+    },
+    gestureStatsValue: {
+        color: LIGHT,  fontSize: FONT_SIZE_16, fontWeight: "bold"
+    },
+    statsColumn: {
+        flex: 1,  ...flex('column', 'nowrap', 'center', 'center')
     }
 });

@@ -22,6 +22,12 @@ const SPACING: number = 10;
 export const GamesHistoryList = () => {
     const { user, logout } = useContext(AuthContext);
 
+    // const { isPending, isError, data, error } = useQuery({
+    //     queryKey: ["game_history"],
+    //     queryFn: getUser,
+    //     refetchInterval: 1000,
+    // });
+
     const gameHistory = [
         { win: true,  mode: 'PvP', opponent: 'Caren', date: '2023.03.21' },
         { win: false, mode: 'PvP', opponent: 'Caren', date: '2023.03.21' },
