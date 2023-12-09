@@ -1,6 +1,6 @@
 import React from 'react';
 import {TouchableOpacity, Text, View, StyleSheet, ViewStyle, StyleProp, TextStyle} from "react-native";
-import {LIGHT, PRIMARY} from "shared/styles";
+import {boxShadow, LIGHT, PRIMARY} from "shared/styles";
 
 interface StandardButtonProps {
     text: string;
@@ -11,7 +11,7 @@ interface StandardButtonProps {
 
 export const StandardButton: React.FC<StandardButtonProps> = ({text, onPress, customStyle, disabled}) => {
     return (
-        <View style={{ width: '100%', paddingHorizontal: 10, marginVertical: 5, backgroundColor: 'none' }}>
+        <View style={styles.buttonWrapper}>
             {
                 <TouchableOpacity style={[ styles.button ]} onPress={ ()=> onPress() } disabled={ disabled }>
                     <Text style={[ styles.text ]}> { text } </Text>
@@ -26,6 +26,12 @@ StandardButton.defaultProps = {
 }
 
 const styles = StyleSheet.create({
+    buttonWrapper: {
+        width: '100%',
+        paddingHorizontal: 10,
+        marginVertical: 5,
+        backgroundColor: 'none'
+    },
     button: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -37,7 +43,8 @@ const styles = StyleSheet.create({
         backgroundColor: PRIMARY,
         width: '100%',
         alignSelf: 'center',
-        zIndex: 1
+        zIndex: 1,
+        ...boxShadow('#000')
         // flex: 1
     },
     text: {

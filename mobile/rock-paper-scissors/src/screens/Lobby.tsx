@@ -1,7 +1,7 @@
 import React, {FC, useContext} from 'react';
 
 import { HomeNavProps } from 'navigation/stacks/HomeStack/HomeParamList';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Button} from 'react-native';
 
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -41,7 +41,7 @@ export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobb
                     description: 'Description for Mode 1',
                     screen: 'Mode1Screen',
                     image: 'https://images.pling.com/img/00/00/62/69/92/1727023/epic-071.jpg',
-                    goTo: ()=> navigation.navigate("Game", { mode: 'pvp' } )
+                    goTo: ()=> navigation.navigate("Game", { mode: 'pvp' } ),
                 },
                 {
                     id: '2',

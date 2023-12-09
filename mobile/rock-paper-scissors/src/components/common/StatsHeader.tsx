@@ -33,7 +33,7 @@ export const StatsHeader: FC<{}> = ({}) => {
                 <Text style={styles.nickname}> { user.username } </Text>
             </View>
             <Row>
-                <AntDesign style={{marginTop: 0}} name={'star'} size={24} color={'PRIMARY'} />
+                <AntDesign style={{marginTop: 0}} name={'star'} size={24} color={PRIMARY} />
                 <Text style={styles.points}> { user.points } </Text>
                 <View style={styles.progressContainer}>
                     <View style={styles.progressBar}>
