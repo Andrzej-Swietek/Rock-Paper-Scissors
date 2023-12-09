@@ -15,8 +15,10 @@ import {
 
 // Types
 import { GameModeSliderItem } from "shared/types";
-import { SliderBackDrop } from "./SliderBackDrop";
+
+// Components
 import {StandardButton} from "components/common";
+import { SliderBackDrop } from "./SliderBackDrop";
 import {BattleButton} from "components/common/BattleButton";
 
 

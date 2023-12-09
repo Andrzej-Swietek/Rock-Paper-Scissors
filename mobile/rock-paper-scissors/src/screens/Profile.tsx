@@ -1,19 +1,27 @@
 import React, {useContext} from 'react';
-import {Image, ImageBackground, SafeAreaView, StyleSheet, Text, View} from "react-native";
+import { ImageBackground, ScrollView, StyleSheet, Text, View, Image} from "react-native";
 
 // Components
-import {Center, FramedContainer, Row} from "components/common";
 import {UserNavProps} from "navigation/stacks/UserStack/UserParamList";
-import {flex, FONT_SIZE_32, LIGHT, PRIMARY, WIN, WINDOW_HEIGHT, WINDOW_WIDTH} from "shared/styles";
-import {StatsHeader} from "components/common/StatsHeader";
-import {HeaderImageBackdrop} from "components/common/HeaderImageBackdrop";
+import {
+    boxShadow,
+    flex, FONT_SIZE_12, FONT_SIZE_16, FONT_SIZE_24,
+    FONT_SIZE_32, FONT_SIZE_48, FONT_SIZE_64,
+    LIGHT,
+    WIN, WINDOW_HEIGHT,
+    WINDOW_WIDTH
+} from "shared/styles";
+
+// Contexts
 import {AuthContext} from "shared/providers";
-import {ShiningText} from "components/profile";
+
+// Component
+import {GamesHistoryList} from "components/profile";
+import {HeaderImageBackdrop, StatsHeader, Row} from "components/common";
 
 interface SettingsProps extends UserNavProps<'profile'> {
 }
 
-const BACKDROP_HEIGHT = WINDOW_HEIGHT*0.65;
 const SPACING: number = 10;
 
 export const Profile: React.FC<SettingsProps> = ({ route, navigation }) => {
@@ -26,43 +34,84 @@ export const Profile: React.FC<SettingsProps> = ({ route, navigation }) => {
 
     const { user, logout } = useContext(AuthContext);
 
-
     return (
         <View style={styles.container}>
-            <StatsHeader />
+            {/*<StatsHeader />*/}
             <HeaderImageBackdrop
                 imageSource={{ uri: 'https://images.pling.com/img/00/00/62/69/92/1727023/epic-071.jpg' }}
             />
-            <View style={styles.cardWrapper}>
+            <ScrollView>
+            {/*    <View style={styles.cardWrapper}>*/}
 
-                <ImageBackground
-                    source={require('../../assets/img/award-gold.png')}
-                    resizeMode={'cover'}
-                    style={{ height: '50%', aspectRatio: 1, backgroundColor: WIN, borderRadius: 26, ...flex('column', 'nowrap', 'center', 'center') }}
-                    imageStyle={{
-                        resizeMode: "cover",
-                        alignSelf: "flex-end"
-                    }}
-                >
-                    <View style={{  backgroundColor: '#0000003d', borderRadius: 10, paddingHorizontal: 10}}>
+            {/*        <ImageBackground*/}
+            {/*            source={require('../../assets/img/award-gold.png')}*/}
+            {/*            resizeMode={'cover'}*/}
+            {/*            style={{ height: '50%', aspectRatio: 1, backgroundColor: WIN, borderRadius: 26, ...flex('column', 'nowrap', 'center', 'center') }}*/}
+            {/*            imageStyle={{*/}
+            {/*                resizeMode: "cover",*/}
+            {/*                alignSelf: "flex-end"*/}
+            {/*            }}*/}
+            {/*        >*/}
+            {/*            <View style={{  backgroundColor: '#0000003d', borderRadius: 10, paddingHorizontal: 10}}>*/}
+            {/*              <Text style={{ fontSize: FONT_SIZE_32, fontWeight: "bold", }}> Gold V </Text>*/}
+            {/*            </View>*/}
+            {/*        </ImageBackground>*/}
 
-                      <Text style={{ fontSize: FONT_SIZE_32, fontWeight: "bold", }}> Gold V </Text>
-                    </View>
-                </ImageBackground>
+            {/*        <FramedContainer style={{ width: '100%', height: '45%', ...flex('column', 'nowrap', 'center', 'flex-start') }}>*/}
+            {/*            <View style={{ marginHorizontal: 10 }}>*/}
+            {/*                <Text> Games Played: { user.gamesPlayed } </Text>*/}
+            {/*                <Text> PvP: { user.gamesPlayed } </Text>*/}
+            {/*                <Text> 2vs2: { user.gamesPlayed } </Text>*/}
+            {/*                <Text> Win Ratio: x % </Text>*/}
+            {/*                <Text> Favorite gesture: -- obrazek --</Text>*/}
+            {/*            </View>*/}
+            {/*        </FramedContainer>*/}
 
-                <FramedContainer style={{ width: '100%', height: '45%', ...flex('column', 'nowrap', 'center', 'flex-start') }}>
-                    <View style={{ marginHorizontal: 10 }}>
-                        <Text> Games Played: { user.gamesPlayed } </Text>
-                        <Text> PvP: { user.gamesPlayed } </Text>
-                        <Text> 2vs2: { user.gamesPlayed } </Text>
-                        <Text> Win Ratio: x % </Text>
-                    </View>
-                </FramedContainer>
+            {/*</View>*/}
+                <View style={{height: WINDOW_HEIGHT*0.5, ...flex('column', 'nowrap', 'center', 'flex-start')}}>
+                  <Row>
+                      <Text style={{ textAlign: 'left', color: LIGHT,  fontSize: FONT_SIZE_48, fontWeight: "bold" }}> { user.username } </Text>
+                  </Row>
+                    <Row>
+                        <View style={{ marginVertical: 10, marginBottom: 20,  flex: 1,  ...flex('column', 'nowrap', 'center', 'center') }}>
+                            <Text style={{ paddingHorizontal: 20, color: LIGHT,  fontSize: FONT_SIZE_16, fontWeight: "bold", textAlign: 'left', width: '100%' }}> Gesture Stats: </Text>
+                            <Row>
+                                <View style={{ flex: 1,  ...flex('column', 'nowrap', 'center', 'center') }}>
+                                    <Image style={{width: 30, height: 30, marginVertical: 10, }} source={require('../../assets/img/rock-icon.png')} />
+                                    <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_16, fontWeight: "bold" }}> 0 </Text>
+                                    <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_12, fontWeight: "bold" }}>  Rock  </Text>
+                                </View>
+                                <View style={{ flex: 1,  ...flex('column', 'nowrap', 'center', 'center') }}>
+                                    <Image style={{width: 30, height: 30, marginVertical: 10, }} source={require('../../assets/img/paper-icon.png')} />
+                                    <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_16, fontWeight: "bold" }}> 0 </Text>
+                                    <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_12, fontWeight: "bold" }}>  Paper  </Text>
+                                </View>
+                                <View style={{ flex: 1,  ...flex('column', 'nowrap', 'center', 'center') }}>
+                                    <Image style={{width: 30, height: 30, marginVertical: 10, }} source={require('../../assets/img/scissors-icon.png')} />
+                                    <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_16, fontWeight: "bold" }}> 0 </Text>
+                                    <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_12, fontWeight: "bold" }}>  Scissors  </Text>
+                                </View>
+                            </Row>
+                        </View>
+                    </Row>
+                    <Row>
+                        <View style={{ flex: 1,  ...flex('column', 'nowrap', 'center', 'center') }}>
+                            <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_24, fontWeight: "bold" }}>{ user.gamesPlayed } </Text>
+                            <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_16, fontWeight: "bold" }}>  Games </Text>
+                        </View>
+                        <View style={{ flex: 1,  ...flex('column', 'nowrap', 'center', 'center') }}>
+                            <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_24, fontWeight: "bold" }}> { user.gamesPlayed }  </Text>
+                            <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_16, fontWeight: "bold" }}> Wins </Text>
+                        </View>
+                        <View style={{ flex: 1,  ...flex('column', 'nowrap', 'center', 'center') }}>
+                            <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_24, fontWeight: "bold" }}> { user.gamesPlayed } </Text>
+                            <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_16, fontWeight: "bold" }}> Win Ratio  </Text>
+                        </View>
+                    </Row>
+                </View>
+            <GamesHistoryList />
 
-
-
-            </View>
-
+            </ScrollView>
         </View>
     )
 }
@@ -87,5 +136,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         gap: 20,
         borderRadius: 34,
-    }
+        ...boxShadow('#000')
+    },
 });
