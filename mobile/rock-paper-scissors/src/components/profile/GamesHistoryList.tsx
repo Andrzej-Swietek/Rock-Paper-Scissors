@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from "react-native";
+import {ImageBackground, StyleSheet, Text, View} from "react-native";
 import {
     boxShadow,
     FONT_SIZE_12,
@@ -13,6 +13,8 @@ import {
 } from "shared/styles";
 import React, {useContext} from "react";
 import {AuthContext} from "shared/providers";
+
+
 
 const BACKDROP_HEIGHT = WINDOW_HEIGHT*0.65;
 const SPACING: number = 10;
@@ -34,14 +36,14 @@ export const GamesHistoryList = () => {
             <View style={styles.historyCarpet}>
                 {
                     gameHistory.map( (item, index) => (
-                        <View key={index} style={styles.historyCardItem}>
+                        <ImageBackground source={item.mode === 'PvP' ? require('../../../assets/img/game_2.jpg') : require('../../../assets/img/game_3.jpg')} key={index} style={styles.historyCardItem}>
                             <View style={{ marginBottom: 10, paddingHorizontal: 20, paddingVertical: 5, width: 80, borderRadius: 15, backgroundColor: item.mode == 'PvP' ? PVP_COLOR : PVE_COLOR }}>
-                                <Text style={{ fontSize: FONT_SIZE_12, textAlign: 'center', fontWeight: 'bold' }}> {item.mode} </Text>
+                                    <Text style={{ fontSize: FONT_SIZE_12, textAlign: 'center', fontWeight: 'bold' }}> {item.mode} </Text>
                             </View>
-                            <Text style={{ color: LIGHT, fontWeight: "700" }}> { user.username } vs {item.opponent} </Text>
-                            <Text style={{ color: LIGHT, fontWeight: "200" }}> { item.date }</Text>
+                            <Text style={[{ color: LIGHT, fontWeight: "700" }, styles.textShadow]}> { user.username } vs {item.opponent} </Text>
+                            <Text style={[{ color: LIGHT, fontWeight: "200" }, styles.textShadow]}> { item.date }</Text>
                             <View style={{ position: 'absolute', top: 0, bottom: 0, right: 0, width: 20, borderRadius: 15, backgroundColor: item.win ? WIN : LOSE }}></View>
-                        </View>
+                        </ImageBackground>
                     ))
                 }
                 <View style={{ height: WINDOW_HEIGHT/10 }}></View>
@@ -77,5 +79,10 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         paddingLeft: 10,
         ...boxShadow('#000')
+    },
+    textShadow: {
+        textShadowColor: 'rgba(0, 0, 0, 0.75)',
+        textShadowOffset: {width: -1, height: 1},
+        textShadowRadius: 10
     }
 })

@@ -40,34 +40,7 @@ export const Profile: React.FC<SettingsProps> = ({ route, navigation }) => {
             <HeaderImageBackdrop
                 imageSource={{ uri: 'https://images.pling.com/img/00/00/62/69/92/1727023/epic-071.jpg' }}
             />
-            <ScrollView>
-            {/*    <View style={styles.cardWrapper}>*/}
-
-            {/*        <ImageBackground*/}
-            {/*            source={require('../../assets/img/award-gold.png')}*/}
-            {/*            resizeMode={'cover'}*/}
-            {/*            style={{ height: '50%', aspectRatio: 1, backgroundColor: WIN, borderRadius: 26, ...flex('column', 'nowrap', 'center', 'center') }}*/}
-            {/*            imageStyle={{*/}
-            {/*                resizeMode: "cover",*/}
-            {/*                alignSelf: "flex-end"*/}
-            {/*            }}*/}
-            {/*        >*/}
-            {/*            <View style={{  backgroundColor: '#0000003d', borderRadius: 10, paddingHorizontal: 10}}>*/}
-            {/*              <Text style={{ fontSize: FONT_SIZE_32, fontWeight: "bold", }}> Gold V </Text>*/}
-            {/*            </View>*/}
-            {/*        </ImageBackground>*/}
-
-            {/*        <FramedContainer style={{ width: '100%', height: '45%', ...flex('column', 'nowrap', 'center', 'flex-start') }}>*/}
-            {/*            <View style={{ marginHorizontal: 10 }}>*/}
-            {/*                <Text> Games Played: { user.gamesPlayed } </Text>*/}
-            {/*                <Text> PvP: { user.gamesPlayed } </Text>*/}
-            {/*                <Text> 2vs2: { user.gamesPlayed } </Text>*/}
-            {/*                <Text> Win Ratio: x % </Text>*/}
-            {/*                <Text> Favorite gesture: -- obrazek --</Text>*/}
-            {/*            </View>*/}
-            {/*        </FramedContainer>*/}
-
-            {/*</View>*/}
+            <ScrollView snapToInterval={WINDOW_HEIGHT * 0.3} decelerationRate="fast" bounces={false}>
                 <View style={{height: WINDOW_HEIGHT*0.5, ...flex('column', 'nowrap', 'center', 'flex-start')}}>
                   <Row>
                       <Text style={{ textAlign: 'left', color: LIGHT,  fontSize: FONT_SIZE_48, fontWeight: "bold" }}> { user.username } </Text>
@@ -77,17 +50,17 @@ export const Profile: React.FC<SettingsProps> = ({ route, navigation }) => {
                             <Text style={{ paddingHorizontal: 20, color: LIGHT,  fontSize: FONT_SIZE_16, fontWeight: "bold", textAlign: 'left', width: '100%' }}> Gesture Stats: </Text>
                             <Row>
                                 <View style={{ flex: 1,  ...flex('column', 'nowrap', 'center', 'center') }}>
-                                    <Image style={{width: 30, height: 30, marginVertical: 10, }} source={require('../../assets/img/rock-icon.png')} />
+                                    <Image style={styles.statsIcon} source={require('../../assets/img/rock-icon.png')} />
                                     <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_16, fontWeight: "bold" }}> 0 </Text>
                                     <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_12, fontWeight: "bold" }}>  Rock  </Text>
                                 </View>
                                 <View style={{ flex: 1,  ...flex('column', 'nowrap', 'center', 'center') }}>
-                                    <Image style={{width: 30, height: 30, marginVertical: 10, }} source={require('../../assets/img/paper-icon.png')} />
+                                    <Image style={styles.statsIcon} source={require('../../assets/img/paper-icon.png')} />
                                     <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_16, fontWeight: "bold" }}> 0 </Text>
                                     <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_12, fontWeight: "bold" }}>  Paper  </Text>
                                 </View>
                                 <View style={{ flex: 1,  ...flex('column', 'nowrap', 'center', 'center') }}>
-                                    <Image style={{width: 30, height: 30, marginVertical: 10, }} source={require('../../assets/img/scissors-icon.png')} />
+                                    <Image style={styles.statsIcon} source={require('../../assets/img/scissors-icon.png')} />
                                     <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_16, fontWeight: "bold" }}> 0 </Text>
                                     <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_12, fontWeight: "bold" }}>  Scissors  </Text>
                                 </View>
@@ -96,16 +69,16 @@ export const Profile: React.FC<SettingsProps> = ({ route, navigation }) => {
                     </Row>
                     <Row>
                         <View style={{ flex: 1,  ...flex('column', 'nowrap', 'center', 'center') }}>
-                            <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_24, fontWeight: "bold" }}>{ user.gamesPlayed } </Text>
-                            <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_16, fontWeight: "bold" }}>  Games </Text>
+                            <Text style={styles.statsTextValue}>{ user.gamesPlayed } </Text>
+                            <Text style={styles.statsTextName}>  Games </Text>
                         </View>
                         <View style={{ flex: 1,  ...flex('column', 'nowrap', 'center', 'center') }}>
-                            <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_24, fontWeight: "bold" }}> { user.gamesPlayed }  </Text>
-                            <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_16, fontWeight: "bold" }}> Wins </Text>
+                            <Text style={styles.statsTextValue}> { user.gamesPlayed }  </Text>
+                            <Text style={styles.statsTextName}> Wins </Text>
                         </View>
                         <View style={{ flex: 1,  ...flex('column', 'nowrap', 'center', 'center') }}>
-                            <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_24, fontWeight: "bold" }}> { user.gamesPlayed } </Text>
-                            <Text style={{ color: LIGHT,  fontSize: FONT_SIZE_16, fontWeight: "bold" }}> Win Ratio  </Text>
+                            <Text style={styles.statsTextValue}> { user.gamesPlayed } </Text>
+                            <Text style={styles.statsTextName}> Win Ratio  </Text>
                         </View>
                     </Row>
                 </View>
@@ -138,4 +111,13 @@ const styles = StyleSheet.create({
         borderRadius: 34,
         ...boxShadow('#000')
     },
+    statsTextName: {
+        color: LIGHT,  fontSize: FONT_SIZE_16, fontWeight: "bold"
+    },
+    statsTextValue: {
+        color: LIGHT,  fontSize: FONT_SIZE_24, fontWeight: "bold"
+    },
+    statsIcon: {
+        width: 30, height: 30, marginVertical: 10,
+    }
 });
