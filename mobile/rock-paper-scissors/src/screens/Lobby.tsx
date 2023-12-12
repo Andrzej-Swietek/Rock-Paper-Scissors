@@ -1,7 +1,7 @@
 import React, {FC, useContext, useRef, useState} from 'react';
 
 import { HomeNavProps } from 'navigation/stacks/HomeStack/HomeParamList';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 
 
 import {AntDesign, MaterialCommunityIcons} from '@expo/vector-icons';
@@ -20,9 +20,12 @@ import {AuthContext} from "shared/providers";
 import {StatsHeader} from "components/common/StatsHeader";
 import {GameModeModal, LobbySlider} from "components/lobby";
 import {Row} from "components/common";
+import {GameMode} from "shared/types";
+import {MOCK_IMAGES} from "shared/constants";
 
 
 interface LobbyProps extends HomeNavProps<'Lobby'> {}
+
 
 export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobby'>) => {
 
@@ -30,9 +33,9 @@ export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobb
 
     const [ visibleModal, setModalVisible ] = useState<boolean>(false);
 
-    const selectedMode = useRef<'PvP'|'PvE'|'2 vs 2'|'none'>('none');
+    const selectedMode = useRef<GameMode|'none'>('none');
 
-    const openModal = (mode: 'PvP'|'PvE'|'2 vs 2'|'none') => {
+    const openModal = (mode: GameMode) => {
         setModalVisible(true);
         selectedMode.current = mode;
     }
@@ -42,20 +45,32 @@ export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobb
         selectedMode.current = 'none';
     }
 
+    const selectModalOption = (mode: GameMode|'none', roomAction: 'create'|'join' ) => {
+        if(selectedMode.current != 'none')
+            navigation.navigate("GameQueue", { mode: mode as  "PvP" | "PvE" | "2 vs 2", roomAction: roomAction })
+        closeModal();
+    }
+
     return (
         <View style={styles.container}>
 
             <StatsHeader />
             <GameModeModal mode={selectedMode.current} close={()=> closeModal()} open={visibleModal}>
                 <Row gap={20}>
-                    <View style={styles.modalOptionTile}>
+                    <TouchableOpacity
+                        onPress={()=>  selectModalOption( selectedMode.current, 'create') }
+                        style={styles.modalOptionTile}
+                    >
                         <AntDesign name={'pluscircleo'} size={32} color={'black'} />
                         <Text style={styles.modalOptionTileText}>Create</Text>
-                    </View>
-                    <View style={styles.modalOptionTile}>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={()=> selectModalOption( selectedMode.current, 'join') }
+                        style={styles.modalOptionTile}
+                    >
                         <AntDesign name={'enter'} size={32} color={'black'} />
                         <Text style={styles.modalOptionTileText}>Join</Text>
-                    </View>
+                    </TouchableOpacity>
                 </Row>
             </GameModeModal>
             <LobbySlider modes={[
@@ -66,9 +81,8 @@ export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobb
                     name: 'PvP',
                     description: 'Description for Mode 1',
                     screen: 'Mode1Screen',
-                    image: 'https://images.pling.com/img/00/00/62/69/92/1727023/epic-071.jpg',
+                    image: MOCK_IMAGES[0],
                     goTo: ()=> openModal('PvP'),
-                    // goTo: ()=> navigation.navigate("Game", { mode: 'pvp' } ),
                 },
                 {
                     id: '2',
@@ -76,8 +90,7 @@ export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobb
                     name: '2 vs 2',
                     description: 'Team up with another player',
                     screen: 'Mode2Screen',
-                    image: 'https://images.pling.com/img/00/00/62/69/92/1727029/epic-091.jpg',
-                    // goTo: ()=> navigation.navigate("Game", { mode: 'pvp' } ),
+                    image: MOCK_IMAGES[1],
                     goTo: ()=> openModal('2 vs 2'),
                 },
                 {
@@ -86,9 +99,9 @@ export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobb
                     name: 'PvE',
                     description: 'Challenge a computer',
                     screen: 'Mode2Screen',
-                    image: 'https://images.pling.com/img/00/00/62/69/92/1727023/epic-071.jpg',
-                    // goTo: ()=> navigation.navigate("Game", { mode: 'pve' } ),
+                    image: MOCK_IMAGES[2],
                     goTo: ()=> openModal('PvE'),
+                    // goTo: ()=> navigation.navigate("Game", { mode: 'pvp' } ),
                 },
                 { id: 'right-spacer' , type: 'spacer'},
             ]} />

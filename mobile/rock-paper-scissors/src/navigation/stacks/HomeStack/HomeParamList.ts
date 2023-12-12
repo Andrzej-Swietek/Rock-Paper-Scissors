@@ -6,6 +6,10 @@ export type HomeParamList = {
     Game: {
         mode: 'pva' | 'pvp' | 'online' | 'pve',
     };
+    GameQueue: {
+        mode: 'PvE' | 'PvP' | '2 vs 2',
+        roomAction: 'join' | 'create'
+    }
     Settings: undefined;
 }
 

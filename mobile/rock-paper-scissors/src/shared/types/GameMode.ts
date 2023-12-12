@@ -1,0 +1,1 @@
+export type GameMode = 'PvP'|'PvE'|'2 vs 2';

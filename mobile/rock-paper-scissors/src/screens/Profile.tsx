@@ -1,25 +1,32 @@
 import React, {useContext} from 'react';
-import { ImageBackground, ScrollView, StyleSheet, Text, View, Image} from "react-native";
+import {
+    ScrollView,
+    StyleSheet,
+    Text,
+    View, Image
+} from "react-native";
 
-// Components
-import {UserNavProps} from "navigation/stacks/UserStack/UserParamList";
+
+// Styles
 import {
     boxShadow,
     flex, FONT_SIZE_12, FONT_SIZE_16, FONT_SIZE_24,
-    FONT_SIZE_32, FONT_SIZE_48, FONT_SIZE_64,
+     FONT_SIZE_48,
     LIGHT,
-    WIN, WINDOW_HEIGHT,
-    WINDOW_WIDTH
+    WINDOW_HEIGHT, WINDOW_WIDTH
 } from "shared/styles";
 
 // Contexts
 import {AuthContext} from "shared/providers";
+import {UserNavProps} from "navigation/stacks/UserStack/UserParamList";
+
 
 // Component
 import {GamesHistoryList} from "components/profile";
-import {HeaderImageBackdrop, StatsHeader, Row} from "components/common";
+import {HeaderImageBackdrop, Row} from "components/common";
 import {useQuery} from "@tanstack/react-query";
 import {StatsService} from "shared/services";
+import {MOCK_IMAGES} from "shared/constants";
 
 interface SettingsProps extends UserNavProps<'profile'> {
 }
@@ -43,7 +50,7 @@ export const Profile: React.FC<SettingsProps> = ({ route, navigation }) => {
         <View style={styles.container}>
             {/*<StatsHeader />*/}
             <HeaderImageBackdrop
-                imageSource={{ uri: 'https://images.pling.com/img/00/00/62/69/92/1727023/epic-071.jpg' }}
+                imageSource={{ uri: MOCK_IMAGES[0] }}
             />
             <ScrollView snapToInterval={WINDOW_HEIGHT * 0.3} decelerationRate="fast" bounces={false}>
                 <View style={{height: WINDOW_HEIGHT*0.5, ...flex('column', 'nowrap', 'center', 'flex-start')}}>
