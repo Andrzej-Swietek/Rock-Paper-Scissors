@@ -13,13 +13,14 @@ import {AntDesign} from "@expo/vector-icons";
 interface GameModeModalProps {
     open: boolean;
     close: ()=> void |  (() => Promise<void>);
+    mode: 'PvP'|'PvE'|'2 vs 2'|'none',
     children?: ReactNode;
 }
 
 const transparent: string = 'rgba(0,0,0,.5)';
 
 
-export const GameModeModal: FC<GameModeModalProps> = ({ open, children, close }) => {
+export const GameModeModal: FC<GameModeModalProps> = ({ open, children, close, mode }) => {
 
     const scaleValue = useRef(new Animated.Value(0)).current
 
@@ -39,6 +40,10 @@ export const GameModeModal: FC<GameModeModalProps> = ({ open, children, close })
         }
     }, [open]);
 
+    const image = mode == 'PvE' ? ({ uri: 'https://images.pling.com/img/00/00/62/69/92/1727023/epic-071.jpg' })
+        : mode == 'PvP'? ({uri: 'https://images.pling.com/img/00/00/62/69/92/1727023/epic-071.jpg'})
+            : ({ uri: 'https://images.pling.com/img/00/00/62/69/92/1727029/epic-091.jpg' })
+
     return (
         <Modal visible={open} animationType={'slide'} transparent={true}>
             <View
@@ -56,7 +61,7 @@ export const GameModeModal: FC<GameModeModalProps> = ({ open, children, close })
                     }}
                 >
                     <HeaderImageBackdrop
-                        imageSource={{ uri: 'https://images.pling.com/img/00/00/62/69/92/1727023/epic-071.jpg' }}
+                        imageSource={image}
                     />
                     <View style={{ position: 'absolute', top: 20, right: 20 }}>
                         <TouchableOpacity onPress={()=> close()}>

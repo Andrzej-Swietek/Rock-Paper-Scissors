@@ -30,13 +30,23 @@ export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobb
 
     const [ visibleModal, setModalVisible ] = useState<boolean>(false);
 
-    // const selectedMode = useRef<'PvP'|'PvE'|'2 vs 2'|'none'>('none');
+    const selectedMode = useRef<'PvP'|'PvE'|'2 vs 2'|'none'>('none');
+
+    const openModal = (mode: 'PvP'|'PvE'|'2 vs 2'|'none') => {
+        setModalVisible(true);
+        selectedMode.current = mode;
+    }
+
+    const closeModal = () => {
+        setModalVisible(false);
+        selectedMode.current = 'none';
+    }
 
     return (
         <View style={styles.container}>
 
             <StatsHeader />
-            <GameModeModal close={()=> setModalVisible(false)} open={visibleModal}>
+            <GameModeModal mode={selectedMode.current} close={()=> closeModal()} open={visibleModal}>
                 <Row gap={20}>
                     <View style={styles.modalOptionTile}>
                         <AntDesign name={'pluscircleo'} size={32} color={'black'} />
@@ -57,7 +67,7 @@ export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobb
                     description: 'Description for Mode 1',
                     screen: 'Mode1Screen',
                     image: 'https://images.pling.com/img/00/00/62/69/92/1727023/epic-071.jpg',
-                    goTo: ()=> setModalVisible(true),
+                    goTo: ()=> openModal('PvP'),
                     // goTo: ()=> navigation.navigate("Game", { mode: 'pvp' } ),
                 },
                 {
@@ -68,7 +78,7 @@ export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobb
                     screen: 'Mode2Screen',
                     image: 'https://images.pling.com/img/00/00/62/69/92/1727029/epic-091.jpg',
                     // goTo: ()=> navigation.navigate("Game", { mode: 'pvp' } ),
-                    goTo: ()=> setModalVisible(true),
+                    goTo: ()=> openModal('2 vs 2'),
                 },
                 {
                     id: '3',
@@ -78,7 +88,7 @@ export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobb
                     screen: 'Mode2Screen',
                     image: 'https://images.pling.com/img/00/00/62/69/92/1727023/epic-071.jpg',
                     // goTo: ()=> navigation.navigate("Game", { mode: 'pve' } ),
-                    goTo: ()=> setModalVisible(true),
+                    goTo: ()=> openModal('PvE'),
                 },
                 { id: 'right-spacer' , type: 'spacer'},
             ]} />
