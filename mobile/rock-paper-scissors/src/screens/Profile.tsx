@@ -18,6 +18,8 @@ import {AuthContext} from "shared/providers";
 // Component
 import {GamesHistoryList} from "components/profile";
 import {HeaderImageBackdrop, StatsHeader, Row} from "components/common";
+import {useQuery} from "@tanstack/react-query";
+import {StatsService} from "shared/services";
 
 interface SettingsProps extends UserNavProps<'profile'> {
 }
@@ -26,13 +28,16 @@ const SPACING: number = 10;
 
 export const Profile: React.FC<SettingsProps> = ({ route, navigation }) => {
 
-    // const { isPending, isError, data, error } = useQuery({
-    //     queryKey: ["user"],
-    //     queryFn: getUser,
-    //     refetchInterval: 1000,
-    // });
+    const { isPending, isError, data, error } = useQuery({
+        queryKey: ["user-stats"],
+        queryFn: () => StatsService.getUserStats(''),
+        // refetchInterval: 1000,
+    });
 
     const { user, logout } = useContext(AuthContext);
+
+    // if (isPending) return <></>
+    // if (isError) return <></>
 
     return (
         <View style={styles.container}>
@@ -51,17 +56,17 @@ export const Profile: React.FC<SettingsProps> = ({ route, navigation }) => {
                             <Row>
                                 <View style={styles.statsColumn}>
                                     <Image style={styles.statsIcon} source={require('../../assets/img/rock-icon.png')} />
-                                    <Text style={styles.gestureStatsValue}> 0 </Text>
+                                    <Text style={styles.gestureStatsValue}> { data?.rocks } </Text>
                                     <Text style={styles.gestureStatsName}>  Rock  </Text>
                                 </View>
                                 <View style={styles.statsColumn}>
                                     <Image style={styles.statsIcon} source={require('../../assets/img/paper-icon.png')} />
-                                    <Text style={styles.gestureStatsValue}> 0 </Text>
+                                    <Text style={styles.gestureStatsValue}> { data?.papers } </Text>
                                     <Text style={styles.gestureStatsName}>  Paper  </Text>
                                 </View>
                                 <View style={styles.statsColumn}>
                                     <Image style={styles.statsIcon} source={require('../../assets/img/scissors-icon.png')} />
-                                    <Text style={styles.gestureStatsValue}> 0 </Text>
+                                    <Text style={styles.gestureStatsValue}> { data?.scissors } </Text>
                                     <Text style={styles.gestureStatsName}>  Scissors  </Text>
                                 </View>
                             </Row>
@@ -69,15 +74,15 @@ export const Profile: React.FC<SettingsProps> = ({ route, navigation }) => {
                     </Row>
                     <Row>
                         <View style={styles.statsColumn}>
-                            <Text style={styles.statsTextValue}>{ user.gamesPlayed } </Text>
+                            <Text style={styles.statsTextValue}>{ data?.games } </Text>
                             <Text style={styles.statsTextName}>  Games </Text>
                         </View>
                         <View style={styles.statsColumn}>
-                            <Text style={styles.statsTextValue}> { user.gamesPlayed }  </Text>
+                            <Text style={styles.statsTextValue}> { data?.wins }  </Text>
                             <Text style={styles.statsTextName}> Wins </Text>
                         </View>
                         <View style={styles.statsColumn}>
-                            <Text style={styles.statsTextValue}> { user.gamesPlayed } </Text>
+                            <Text style={styles.statsTextValue}> { data?.wins / data?.games || 0 } </Text>
                             <Text style={styles.statsTextName}> Win Ratio  </Text>
                         </View>
                     </Row>

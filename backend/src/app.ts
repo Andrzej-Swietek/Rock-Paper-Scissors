@@ -1,16 +1,26 @@
 import express from 'express';
+import {Socket} from "socket.io";
 import {createServer, Server} from "http";
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import hpp from 'hpp';
 import morgan from 'morgan';
+
+// Types & Interfaces
 import {Routes} from "@interfaces/routes.interface";
-import {CREDENTIALS, NODE_ENV, ORIGIN, PORT, LOG_FORMAT} from "@config";
+
+// Utils
 import {logger, stream} from "@utils/logger";
+
+// Middlewares
 import errorMiddleware from "@middlewares/error.middleware";
+
+// Envs
+import {CREDENTIALS, NODE_ENV, ORIGIN, PORT, LOG_FORMAT} from "@config";
+
+// Websocket Events
 import {WebsocketServer, WebsocketServerBuilder} from "@websocket/websocket";
-import {Socket} from "socket.io";
 import {ConnectionEvent} from "@events/connection.event";
 import {ChatEvent} from "@events/chat.event";
 import {GameEvent} from "@events/game.event";

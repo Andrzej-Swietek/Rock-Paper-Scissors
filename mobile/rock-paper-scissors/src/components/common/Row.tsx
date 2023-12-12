@@ -6,12 +6,18 @@ interface RowProps {
         justifyContent?:  "flex-start" | "flex-end" | "center" | "space-between" | "space-around",
         alignItems?: FlexAlignType
     },
-    children: React.ReactNode
+    gap?: number;
+    children: React.ReactNode;
 }
 
-export const Row: React.FC<RowProps> = ({flex,children}) => {
+export const Row: React.FC<RowProps> = ({flex, gap=0,children}) => {
     return (
-        <View style={{ flexDirection: 'row', justifyContent: flex?.justifyContent ? flex?.justifyContent : 'center', alignItems: flex?.alignItems ? flex?.alignItems : 'center' }}>
+        <View style={{
+            flexDirection: 'row',
+            justifyContent: flex?.justifyContent ? flex?.justifyContent : 'center',
+            alignItems: flex?.alignItems ? flex?.alignItems : 'center',
+            gap
+        }}>
             {
                 children
             }

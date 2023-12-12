@@ -1,13 +1,13 @@
-import React, {FC, useContext} from 'react';
+import React, {FC, useContext, useRef, useState} from 'react';
 
 import { HomeNavProps } from 'navigation/stacks/HomeStack/HomeParamList';
-import {View, StyleSheet, Button} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 
 
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import {AntDesign, MaterialCommunityIcons} from '@expo/vector-icons';
 
 import {
-    boxShadow,
+    boxShadow, flex, FONT_SIZE_24,
     FONT_SIZE_32,
     LIGHT, PRIMARY, SECONDARY,
     WINDOW_HEIGHT, WINDOW_WIDTH
@@ -18,7 +18,8 @@ import {AuthContext} from "shared/providers";
 
 // Components
 import {StatsHeader} from "components/common/StatsHeader";
-import {LobbySlider} from "components/lobby";
+import {GameModeModal, LobbySlider} from "components/lobby";
+import {Row} from "components/common";
 
 
 interface LobbyProps extends HomeNavProps<'Lobby'> {}
@@ -27,11 +28,26 @@ export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobb
 
     const { logout, user } = useContext(AuthContext);
 
+    const [ visibleModal, setModalVisible ] = useState<boolean>(false);
+
+    // const selectedMode = useRef<'PvP'|'PvE'|'2 vs 2'|'none'>('none');
+
     return (
         <View style={styles.container}>
 
             <StatsHeader />
-
+            <GameModeModal close={()=> setModalVisible(false)} open={visibleModal}>
+                <Row gap={20}>
+                    <View style={styles.modalOptionTile}>
+                        <AntDesign name={'pluscircleo'} size={32} color={'black'} />
+                        <Text style={styles.modalOptionTileText}>Create</Text>
+                    </View>
+                    <View style={styles.modalOptionTile}>
+                        <AntDesign name={'enter'} size={32} color={'black'} />
+                        <Text style={styles.modalOptionTileText}>Join</Text>
+                    </View>
+                </Row>
+            </GameModeModal>
             <LobbySlider modes={[
                 { id: 'left-spacer' , type: 'spacer'},
                 {
@@ -41,7 +57,8 @@ export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobb
                     description: 'Description for Mode 1',
                     screen: 'Mode1Screen',
                     image: 'https://images.pling.com/img/00/00/62/69/92/1727023/epic-071.jpg',
-                    goTo: ()=> navigation.navigate("Game", { mode: 'pvp' } ),
+                    goTo: ()=> setModalVisible(true),
+                    // goTo: ()=> navigation.navigate("Game", { mode: 'pvp' } ),
                 },
                 {
                     id: '2',
@@ -50,7 +67,8 @@ export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobb
                     description: 'Team up with another player',
                     screen: 'Mode2Screen',
                     image: 'https://images.pling.com/img/00/00/62/69/92/1727029/epic-091.jpg',
-                    goTo: ()=> navigation.navigate("Game", { mode: 'pvp' } )
+                    // goTo: ()=> navigation.navigate("Game", { mode: 'pvp' } ),
+                    goTo: ()=> setModalVisible(true),
                 },
                 {
                     id: '3',
@@ -59,7 +77,8 @@ export const Lobby : FC<LobbyProps> = ({ navigation, route }: HomeNavProps<'Lobb
                     description: 'Challenge a computer',
                     screen: 'Mode2Screen',
                     image: 'https://images.pling.com/img/00/00/62/69/92/1727023/epic-071.jpg',
-                    goTo: ()=> navigation.navigate("Game", { mode: 'pve' } )
+                    // goTo: ()=> navigation.navigate("Game", { mode: 'pve' } ),
+                    goTo: ()=> setModalVisible(true),
                 },
                 { id: 'right-spacer' , type: 'spacer'},
             ]} />
@@ -118,4 +137,17 @@ const styles = StyleSheet.create({
         color: LIGHT,
         borderRadius: 25
     },
+    modalOptionTile:{
+        flex: 1,
+        aspectRatio: 1,
+        backgroundColor: LIGHT+'3d',
+        borderRadius: 20 ,
+        ...boxShadow('#000'),
+        ...flex('column', 'nowrap', 'center', 'center')
+    },
+    modalOptionTileText: {
+        marginTop: 10,
+        fontSize: FONT_SIZE_24,
+        fontWeight: "300"
+    }
 })
