@@ -14,3 +14,12 @@ export const GOLD = '#E0CD67';
 export const SILVER = '#C0C0C0';
 export const BRONZE = '#8e7b78';
 export const UNRANKED = '#d4efca'
+
+
+export const PVE_COLOR = '#9FD4F1';
+export const PVP_COLOR = '#E19FF1';
+export const WIN = "#BAE365"
+export const LOSE = "#FC9397"
+
+export const GRAY_LIGHT = '#CCCCCC';  // Light Gray
+export const GRAY = '#D9D9D9';  // Dark Gray

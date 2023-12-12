@@ -15,7 +15,11 @@ import {
 
 // Types
 import { GameModeSliderItem } from "shared/types";
+
+// Components
+import {StandardButton} from "components/common";
 import { SliderBackDrop } from "./SliderBackDrop";
+import {BattleButton} from "components/common/BattleButton";
 
 
 interface LobbySliderProps {
@@ -75,7 +79,7 @@ export const LobbySlider: FC<LobbySliderProps> = ({ modes }) => {
 
 
                     return (
-                        <View style={{ width:  ITEM_SIZE}}>
+                        <View style={{ width:  ITEM_SIZE, marginTop: 80}}>
                             <Animated.View
                                 style={{
                                     marginHorizontal: SPACING,
@@ -94,11 +98,16 @@ export const LobbySlider: FC<LobbySliderProps> = ({ modes }) => {
                                     { item.name }
                                 </Text>
                                 <Text
-                                    style={{ fontSize: FONT_SIZE_12 }}
+                                    style={{ fontSize: FONT_SIZE_12, marginBottom: SPACING }}
                                     numberOfLines={3}
                                 >
                                     { item.description }
                                 </Text>
+
+                                {/*<StandardButton onPress={()=> item.goTo()} text={'play'} />*/}
+                                <BattleButton onPress={()=> item.goTo()} text={'Battle'} />
+                                { item.cardContent ? item.cardContent : null }
+
                             </Animated.View>
                         </View>
                     )

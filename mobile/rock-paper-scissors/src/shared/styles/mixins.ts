@@ -1,4 +1,5 @@
-import {Dimensions,PixelRatio} from 'react-native';
+import {Dimensions, PixelRatio, TextStyle, ViewStyle} from 'react-native';
+import {LIGHT} from "shared/styles/colors";
 export const WINDOW_WIDTH = Dimensions.get('window').width;
 export const WINDOW_HEIGHT = Dimensions.get('window').height;
 const guidelineBaseWidth = 375;
@@ -54,3 +55,10 @@ export function flex(dir:'row'|'column' ='row', wrap: 'wrap'|'nowrap' = 'wrap', 
 //        left: left
 //    })
 // }
+
+export const DEFAULT_SCREEN_CONTAINER: ViewStyle | TextStyle  =  {
+    flex: 1,
+    backgroundColor: LIGHT,
+    paddingVertical: 30,
+    alignItems: 'center'
+}

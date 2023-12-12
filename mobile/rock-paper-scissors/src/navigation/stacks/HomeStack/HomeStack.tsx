@@ -2,7 +2,7 @@ import React, {useLayoutEffect} from 'react';
 import {View} from "react-native";
 import {CardStyleInterpolators, createStackNavigator} from "@react-navigation/stack";
 import {HomeParamList} from "./HomeParamList";
-import {Lobby, Game, Settings} from "../../../screens";
+import {Lobby, Game, Settings, GameQueue} from "../../../screens";
 import {getFocusedRouteNameFromRoute} from "@react-navigation/native";
 
 interface HomeStackProps {
@@ -15,7 +15,7 @@ export const HomeStack: React.FC<HomeStackProps> = ({ navigation, route }) => {
 
     useLayoutEffect( ()=> {
         const routeName = getFocusedRouteNameFromRoute(route);
-        if ( routeName === 'Game' )  navigation.setOptions({tabBarStyle: {display: 'none'}});
+        if ( routeName === 'Game' || routeName == 'GameQueue' )  navigation.setOptions({tabBarStyle: {display: 'none'}});
         else navigation.setOptions({tabBarStyle: {
                 position: 'absolute',
                 bottom: 15,
@@ -39,6 +39,7 @@ export const HomeStack: React.FC<HomeStackProps> = ({ navigation, route }) => {
         >
             <Stack.Screen name={'Lobby'} component={Lobby} />
             <Stack.Screen name={'Game'} component={Game} />
+            <Stack.Screen name={'GameQueue'} component={GameQueue} />
             <Stack.Screen name={'Settings'} component={Settings} />
         </Stack.Navigator>
     )

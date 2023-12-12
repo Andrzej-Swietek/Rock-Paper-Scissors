@@ -1,12 +1,13 @@
 import React, {useState} from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useAsyncStorage} from "shared/hooks";
+import {User} from "shared/types";
+import {UserService} from "shared/services";
 
 interface AuthProviderProps {
     children
 }
 
-export type User = { username: string, points: number,  gamesPlayed: number, level: number, exp: number }
 
 export const AuthContext = React.createContext<{
   user: User,
@@ -38,8 +39,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           await AsyncStorage.setItem('user', JSON.stringify(userFromAPI))
         },
         logout: async (): Promise<void> => {
+          await UserService.logout(user.uuid);
           setUser(null)
-          await AsyncStorage.removeItem('user')
+          await AsyncStorage.removeItem('user');
         },
         updateScore: (score: number) => {
             updateScore(score);
