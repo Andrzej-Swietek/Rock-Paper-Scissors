@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import {Socket} from "socket.io";
 import {createServer, Server} from "http";
 import compression from 'compression';

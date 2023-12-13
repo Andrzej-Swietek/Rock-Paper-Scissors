@@ -1,7 +1,7 @@
 {
-  "name": "TheRotaGame",
+  "name": "the_rock_paper_scissors",
   "version": "1.0.0",
-  "description": "Websocket Microservice for rota game",
+  "description": "Websocket Microservice for Rock Paper Scissors game",
   "main": "index.js",
   "author": "Andrzej Swietek",
   "license": "All Rights Reserved",
@@ -70,6 +70,7 @@
     "nodemon": "^2.0.9",
     "pm2": "^5.1.0",
     "prettier": "^2.3.2",
+    "prisma": "^5.7.0",
     "supertest": "^6.2.2",
     "ts-jest": "^27.1.4",
     "ts-node": "^10.4.0",
