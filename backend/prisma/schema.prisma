@@ -20,8 +20,12 @@ model User {
   verifiedAt       DateTime?
   isVerified       Boolean
 
-  Token     Token[]
-  UserStats UserStats[]
+  token     Token[]
+  userStats UserStats[]
+
+  OAuthClient      OAuthClient[]
+  OAuthAccessToken OAuthAccessToken[]
+  OAuthCode        OAuthCode[]
 
   @@map("users")
 }
@@ -48,4 +52,46 @@ model UserStats {
   points   Int
   level    Int
   exp      Int
+}
+
+model OAuthClient {
+  id           Int    @id @unique @default(autoincrement())
+  clientID     String
+  clientSecret String
+  // redirectUris String[]
+  redirectUri  String
+  // grants String[]
+  grants       String
+
+  user             User               @relation(fields: [userUuid], references: [uuid])
+  userUuid         String
+  OAuthAccessToken OAuthAccessToken[]
+  OAuthCode        OAuthCode[]
+}
+
+model OAuthAccessToken {
+  id Int @id @unique @default(autoincrement())
+
+  accessToken           String
+  accessTokenExpiresAt  DateTime
+  refreshToken          String
+  refreshTokenExpiresAt DateTime
+  scope                 String
+  userUUID              String
+  clientID              Int
+
+  user   User        @relation(fields: [userUUID], references: [uuid])
+  client OAuthClient @relation(fields: [clientID], references: [id])
+}
+
+model OAuthCode {
+  id                Int      @id @unique @default(autoincrement())
+  authorizationCode String
+  expiresAt         DateTime
+  scope             String
+  userUUID          String
+  clientID          Int
+
+  user   User        @relation(fields: [userUUID], references: [uuid])
+  client OAuthClient @relation(fields: [clientID], references: [id])
 }
