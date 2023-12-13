@@ -9,19 +9,24 @@ import {RequestWithUser} from "@interfaces/auth.interface";
 
 // DTO
 import {CreateUserDto} from "@dtos/user.dto";
+import UserService from "@services/user.service";
+import {HttpException} from "@exceptions/HttpException";
 
 class AuthController {
   public authService = new AuthService();
+  public userService = new UserService();
 
   public register = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const {email} = req.body;
 
-      // const user = await this.userService.findUserByEmail(email);
-      // if (user) return this.userService.deleteUser(user._id);
-      //
-      // const newUser = await this.userService.createUser({ ...req.body });
+       const user = await this.userService.findUserByEmail(email);
+      if (user)
+        throw new HttpException(409, `Your email: ${email} already taken`);
+
+      const newUser = await this.userService.createUser({ ...req.body });
       // await this.emailService.sendVerificationEmail(newUser, req, res);
+
     } catch (error) {
       next(error);
     }

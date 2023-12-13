@@ -29,4 +29,33 @@ export default class TokenService {
     //
     // return _accessToken;
   }
+
+  public async revokeToken(accessToken: string) {
+    // const deleteResult = await this.oauthToken.deleteOne({
+    //   accessToken: accessToken,
+    // });
+
+    // return deleteResult.deletedCount > 0;
+  }
+
+  public async revokeAuthrizationCode(code: string) {
+    // const deleteResult = await this.oauthCode.deleteOne({
+    //   authorizationCode: code,
+    // });
+
+    // return deleteResult.deletedCount > 0;
+  }
+
+  public async getClient(clientId: any, clientSecret: string) {
+    const params: {
+      clientId: string;
+      clientSecret?: string;
+    } = {
+      clientId,
+    };
+    if (clientSecret) {
+      params.clientSecret = clientSecret;
+    }
+    // return this.oauthClient.findOne(params);
+  }
 }

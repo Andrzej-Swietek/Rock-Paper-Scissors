@@ -62,5 +62,16 @@ export default class UserService {
     return deletedUser;
   }
 
+  public async verifyUser(uuid: string): Promise<User> {
+    if (isEmpty(uuid)) throw new HttpException(400, "Missing uuid attribute");
 
+    const findUser = await this.userRepository.getUserByUUID(uuid);
+    if (!findUser) throw new HttpException(400, "User not found");
+
+    const newUser: User = await this.userRepository.updateUser(uuid, {
+      isVerified: true
+    })
+
+    return newUser;
+  }
 }
