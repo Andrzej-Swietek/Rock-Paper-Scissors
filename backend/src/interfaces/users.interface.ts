@@ -5,8 +5,8 @@ export interface User {
   password: string;
 
   verificationCode: string;
-  verifiedAt: Date;
-  isVerified: string;
+  verifiedAt: Date|string;
+  isVerified: boolean;
 }
 
 

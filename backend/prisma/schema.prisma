@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  // uuid        String    @id @default(auto()) @map("_uuid")
+  uuid             String    @id @map("_uuid")
+  username         String    @unique
+  email            String    @unique
+  password         String
+  verificationCode String
+  verifiedAt       DateTime?
+  isVerified       Boolean
+
+  Token     Token[]
+  UserStats UserStats[]
+
+  @@map("users")
+}
+
+model Token {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  token     String
+  createdAt DateTime @default(now()) @map("created_at")
+  user      User     @relation(fields: [userId], references: [uuid])
+
+  @@map("tokens")
+}
+
+model UserStats {
+  id       Int    @id @unique
+  userId   String
+  user     User   @relation(fields: [userId], references: [uuid])
+  rocks    Int
+  papers   Int
+  scissors Int
+  wins     Int
+  games    Int
+  points   Int
+  level    Int
+  exp      Int
+}

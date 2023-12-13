@@ -1,7 +1,13 @@
-import AuthService from "@services/auth.service";
 import {NextFunction, Request, Response} from "express";
+
+// Services
+import AuthService from "@services/auth.service";
+
+// Interfaces
 import {User} from "@interfaces/users.interface";
 import {RequestWithUser} from "@interfaces/auth.interface";
+
+// DTO
 import {CreateUserDto} from "@dtos/user.dto";
 
 class AuthController {
@@ -80,3 +86,5 @@ class AuthController {
   };
 
 }
+
+export default AuthController;
