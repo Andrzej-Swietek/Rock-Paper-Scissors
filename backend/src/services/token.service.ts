@@ -1,13 +1,14 @@
 import {sign} from "jsonwebtoken";
 import {SECRET_KEY} from "@config";
 
+// Interfaces
 import {DataStoredInToken, TokenData} from "@interfaces/auth.interface";
 import {User} from "@interfaces/users.interface";
 
 export default class TokenService {
 
   public createToken(user: User): TokenData {
-    const dataStoredInToken: DataStoredInToken = { user_uuid: user._id };
+    const dataStoredInToken: DataStoredInToken = { user_uuid: user.uuid };
     const secretKey: string = SECRET_KEY;
     const expiresIn: number = 60 * 60;
 

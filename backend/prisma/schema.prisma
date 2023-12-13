@@ -37,7 +37,7 @@ model Token {
 }
 
 model UserStats {
-  id       Int    @id @unique
+  id       Int    @id @unique @default(autoincrement())
   userId   String
   user     User   @relation(fields: [userId], references: [uuid])
   rocks    Int
