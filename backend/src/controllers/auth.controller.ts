@@ -31,6 +31,8 @@ class AuthController {
       const newUser = await this.userService.createUser({ ...req.body });
       // await this.emailService.sendVerificationEmail(newUser, req, res);
 
+      res.status(201).json({ data: newUser, message: 'register' });
+
     } catch (error) {
       next(error);
     }

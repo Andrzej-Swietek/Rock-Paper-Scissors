@@ -3,13 +3,13 @@
 
 ###
 # User Signup
-POST http://localhost:3030/auth/signup
+POST http://localhost:3030/auth/register
 Content-Type: application/json
 
 {
-  "nickname": "user",
+  "username": "user",
   "email": "example@email.com",
-  "password": "password"
+  "password": "pass"
 }
 
 ###
