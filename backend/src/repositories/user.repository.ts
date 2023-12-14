@@ -58,7 +58,7 @@ class UserRepository {
         isVerified: true, // TODO: Can be changed when needed
         verificationCode: '',
 
-        UserStats: {
+        userStats: {
           create: {
             rocks: 0,
             papers: 0,

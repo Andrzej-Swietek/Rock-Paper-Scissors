@@ -3,6 +3,8 @@ import { verify } from 'jsonwebtoken';
 import { SECRET_KEY } from '@config';
 import { HttpException } from '@exceptions/HttpException';
 import { DataStoredInToken, RequestWithUser } from '@interfaces/auth.interface';
+import UserRepository from "@/repositories/user.repository";
+import {User} from "@interfaces/users.interface";
 
 const authenticatedMiddleware = async (req: RequestWithUser, res: Response, next: NextFunction) => {
   try {
@@ -12,8 +14,9 @@ const authenticatedMiddleware = async (req: RequestWithUser, res: Response, next
       const secretKey: string = SECRET_KEY;
       const verificationResponse = (await verify(Authorization, secretKey)) as DataStoredInToken;
       const userUuid = verificationResponse.user_uuid;
-      // const findUser = await userModel.findById(userUuid);
-      const findUser = null; // TODO: Change TO USER SEARCH
+
+      const userRepository = new UserRepository();
+      const findUser: User = await userRepository.getUserByUUID(userUuid)
       if (findUser) {
         req.user = findUser;
         next();
