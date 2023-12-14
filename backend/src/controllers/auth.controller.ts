@@ -9,7 +9,11 @@ import {RequestWithUser} from "@interfaces/auth.interface";
 
 // DTO
 import {CreateUserDto} from "@dtos/user.dto";
+
+// Services
 import UserService from "@services/user.service";
+
+// Exceptions
 import {HttpException} from "@exceptions/HttpException";
 
 class AuthController {
