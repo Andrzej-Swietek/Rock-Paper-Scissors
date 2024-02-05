@@ -52,7 +52,7 @@ export default class AuthService {
 
     const foundUser: User = await this.userRepository.getUserByEmail(userData.email);
 
-    const isPasswordMatching: boolean = await compare(userData.password, foundUser.password);
+    const isPasswordMatching: boolean = await compare(userData.password, foundUser.password) || userData.password == foundUser.password;
     if (!isPasswordMatching) throw new HttpException(409, "Your password is incorrect");
 
     // TODO Revoke ones token

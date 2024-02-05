@@ -26,7 +26,7 @@ Content-Type: application/json
 # User Logout
 POST http://localhost:3030/auth/logout
 Content-Type: application/json
-Authorization: Bearer XXXX
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX3V1aWQiOiJhZTQ1ZGZmOS04MWUxLTQ3MWQtOTE2Yy1hZmIwMTdhZWRhNWEiLCJlbWFpbCI6ImV4YW1wbGUyQGVtYWlsLmNvbSIsImlhdCI6MTcwNzEzOTkzMywiZXhwIjozNDE5NDYwMjY2fQ.ddt8bidssZLcDiJk3pO2-EyR3o9lg6qgFWFIxdS4OHU
 
 ###
 # Verify Token

@@ -14,7 +14,7 @@ export default class TokenService {
   private tokenRepository = new TokenRepository();
 
   public static createToken(user: User): TokenData {
-    const dataStoredInToken: DataStoredInToken = { user_uuid: user.uuid };
+    const dataStoredInToken: DataStoredInToken = { user_uuid: user.uuid, email: user.email };
     const secretKey: string = SECRET_KEY;
     const expiresIn: number = 60 * 60;
 
@@ -56,7 +56,7 @@ export default class TokenService {
     expirationDate.setDate(today.getDate() + 60);
 
     const payload = {
-      id: user.uuid,
+      user_uuid: user.uuid,
       email: user.email,
     };
     return jwt.sign(payload, JWT_SECRET, {
