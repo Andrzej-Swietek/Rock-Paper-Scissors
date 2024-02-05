@@ -7,26 +7,26 @@ POST http://localhost:3030/auth/register
 Content-Type: application/json
 
 {
-  "username": "user",
-  "email": "example@email.com",
+  "username": "user2",
+  "email": "example2@email.com",
   "password": "pass"
 }
 
 ###
 # User Index
-POST {{ baseURL }}/login
+POST http://localhost:3030/auth/login
 Content-Type: application/json
 
 {
-  "email": "example@email.com",
-  "password": "password"
+  "email": "example2@email.com",
+  "password": "pass2"
 }
 
 ###
 # User Logout
-POST {{ baseURL }}/logout
+POST http://localhost:3030/auth/logout
 Content-Type: application/json
-
+Authorization: Bearer XXXX
 
 ###
 # Verify Token

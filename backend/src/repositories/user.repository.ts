@@ -2,6 +2,8 @@ import Prisma from "@/databases/prisma";
 import {User} from "@interfaces/users.interface";
 import {CreateUserDto} from "@dtos/user.dto";
 import * as crypto from "crypto";
+import {SALT} from "@config";
+import {compare, hash} from "bcrypt";
 
 class UserRepository {
   private readonly prisma = Prisma.getInstance();
@@ -89,6 +91,11 @@ class UserRepository {
         uuid,
       },
     });
+  }
+
+  public async comparePasswords(user: User, password: string): Promise<boolean> {
+    const isPasswordMatch: boolean = await compare(password, user.password);
+    return isPasswordMatch;
   }
 }
 

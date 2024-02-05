@@ -12,5 +12,7 @@ export const {
   SECRET_KEY,
   ORIGIN,
   LOG_DIR,
-  LOG_FORMAT
+  LOG_FORMAT,
+  SALT,
+  JWT_SECRET
 } = process.env;

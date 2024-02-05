@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { check, validationResult } from 'express-validator';
 
 // Interface
 import { Routes } from '@interfaces/routes.interface';
@@ -24,7 +25,12 @@ class AuthRoute implements Routes {
 
   private initializeRoutes() {
     this.router.post(`${this.path}/register`, validationMiddleware(CreateUserDto, 'body'),  this.authController.register);
-    this.router.post(`${this.path}/login`, validationMiddleware(CreateUserDto, 'body'), this.authController.login);
+    this.router.post(
+      `${this.path}/login`,
+      check('email').isEmail().withMessage('Enter a valid email address'),
+      check('password').not().isEmpty(),
+      this.authController.login
+    );
     this.router.post(`${this.path}/logout`, authenticatedMiddleware,  this.authController.logout);
     this.router.get(`${this.path}/verify/:token`, this.authController.verify);
   }

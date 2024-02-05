@@ -11,19 +11,21 @@ import OauthRepository from "@/repositories/oauth.repository";
 
 // Interfaces
 import {User} from "@interfaces/users.interface";
-import {TokenData} from "@interfaces/auth.interface";
+import {ILoginData, TokenData} from "@interfaces/auth.interface";
 
 // Services
 import TokenService from "@services/token.service";
 
 // Utils
 import {isEmpty} from "@utils/isEmpty";
+import userRepository from "@/repositories/user.repository";
 
 
 export default class AuthService {
 
   private readonly userRepository: UserRepository = new UserRepository();
   private readonly oauthRepository = new OauthRepository();
+  private readonly tokenService = new TokenService();
 
   public async signup(userData: CreateUserDto): Promise<User> {
     if (isEmpty(userData)) throw new HttpException(400, "No user data was provided");
@@ -31,20 +33,18 @@ export default class AuthService {
     return createdUser;
   }
 
-  public async login(userData: CreateUserDto): Promise<{ cookie: string; foundUser: User }> {
-    if (isEmpty(userData)) throw new HttpException(400, "User data not found");
-    const foundUser: User = await this.userRepository.getUserByEmail(userData.email);
-    if (!foundUser) throw new HttpException(409, `Your email: ${userData.email} not found`);
+  public async loginUser(email: string, password: string): Promise<ILoginData> {
+    console.log({ password, email });
+    if (!email) throw new HttpException(400, 'Invalid request');
+    const user: User = await this.userRepository.getUserByEmail(email);
 
+    if (await this.userRepository.comparePasswords(user, password)) throw new HttpException(400, 'Invalid credentials');
+    if (!user.isVerified) throw new HttpException(401, 'Your account has not been verified.');
 
-    const isPasswordMatching: boolean = await compare(userData.password, foundUser.password);
-    if (!isPasswordMatching) throw new HttpException(409, "Your password is incorrect");
-
-
-    const tokenData: TokenData = TokenService.createToken(foundUser);
-    const cookie: string = this.createCookie(tokenData);
-
-    return { cookie, foundUser };
+    return {
+      user,
+      token: await this.tokenService.generateJWT(user),
+    };
   }
 
   public async logout(userData: User) {
@@ -56,11 +56,11 @@ export default class AuthService {
     if (!isPasswordMatching) throw new HttpException(409, "Your password is incorrect");
 
     // TODO Revoke ones token
+    return userData;
   }
 
   public createCookie(tokenData: TokenData): string {
     return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
   }
-
 
 }

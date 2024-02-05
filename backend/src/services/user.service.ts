@@ -1,4 +1,7 @@
 import { hash } from 'bcrypt';
+import crypto from 'crypto';
+import { SALT, JWT_SECRET } from '@config';
+import jwt from 'jsonwebtoken';
 
 // Interfaces
 import {User} from "@interfaces/users.interface";
@@ -73,5 +76,9 @@ export default class UserService {
     })
 
     return newUser;
+  }
+
+  public async comparePasswords(user: User, password: string): Promise<boolean> {
+    return await this.userRepository.comparePasswords(user, password);
   }
 }

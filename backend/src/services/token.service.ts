@@ -1,14 +1,17 @@
-import {sign} from "jsonwebtoken";
-import {SECRET_KEY} from "@config";
+import jwt, {sign} from "jsonwebtoken";
+import {JWT_SECRET, SECRET_KEY} from "@config";
 
 // Interfaces
 import {DataStoredInToken, TokenData} from "@interfaces/auth.interface";
 import {User} from "@interfaces/users.interface";
 import OauthRepository from "@/repositories/oauth.repository";
+import TokenRepository from "@/repositories/token.repository";
+import {Token} from "@prisma/client";
 
 export default class TokenService {
 
   private oauthRepository = new OauthRepository();
+  private tokenRepository = new TokenRepository();
 
   public static createToken(user: User): TokenData {
     const dataStoredInToken: DataStoredInToken = { user_uuid: user.uuid };
@@ -16,6 +19,10 @@ export default class TokenService {
     const expiresIn: number = 60 * 60;
 
     return { expiresIn, token: sign(dataStoredInToken, secretKey, { expiresIn }) };
+  }
+
+  public async getToken(token : string): Promise<Token> {
+    return this.tokenRepository.getToken(token);
   }
 
   public async getAccessToken(accessToken: any) {
@@ -41,5 +48,19 @@ export default class TokenService {
       params.clientSecret = clientSecret;
     }
     return await this.oauthRepository.getClient(params.clientId, params.clientSecret)
+  }
+
+  public async generateJWT(user: User) {
+    const today = new Date();
+    const expirationDate = new Date(today);
+    expirationDate.setDate(today.getDate() + 60);
+
+    const payload = {
+      id: user.uuid,
+      email: user.email,
+    };
+    return jwt.sign(payload, JWT_SECRET, {
+      expiresIn: parseInt((expirationDate.getTime() / 1000) as any as string, 10),
+    });
   }
 }
