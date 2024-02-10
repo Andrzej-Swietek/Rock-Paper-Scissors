@@ -29,8 +29,9 @@ export default class TokenService {
     return await this.oauthRepository.getAccessToken(accessToken);
   }
 
-  public async revokeToken(accessToken: string): Promise<boolean> {
-    return await this.oauthRepository.revokeToken(accessToken);
+  public async revokeToken(accessToken: string) {
+    // return await this.oauthRepository.revokeToken(accessToken);
+    return this.tokenRepository.revokeToken(accessToken);
   }
 
   public async revokeAuthorizationCode(code: string): Promise<boolean> {
@@ -59,8 +60,13 @@ export default class TokenService {
       user_uuid: user.uuid,
       email: user.email,
     };
-    return jwt.sign(payload, JWT_SECRET, {
+
+    const jwtToken =  jwt.sign(payload, JWT_SECRET, {
       expiresIn: parseInt((expirationDate.getTime() / 1000) as any as string, 10),
     });
+
+    await this.tokenRepository.createToken(user.uuid, jwtToken);
+
+    return jwtToken;
   }
 }

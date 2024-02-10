@@ -8,6 +8,7 @@ export interface DataStoredInToken {
 
 export interface TokenData {
   token: string;
+  is_expired?: boolean;
   expiresIn: number;
 }
 

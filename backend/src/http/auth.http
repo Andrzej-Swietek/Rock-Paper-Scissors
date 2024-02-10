@@ -7,8 +7,8 @@ POST http://localhost:3030/auth/register
 Content-Type: application/json
 
 {
-  "username": "user2",
-  "email": "example2@email.com",
+  "username": "user3",
+  "email": "example3@email.com",
   "password": "pass"
 }
 
@@ -18,15 +18,15 @@ POST http://localhost:3030/auth/login
 Content-Type: application/json
 
 {
-  "email": "example2@email.com",
-  "password": "pass2"
+  "email": "example3@email.com",
+  "password": "pass3"
 }
 
 ###
 # User Logout
 POST http://localhost:3030/auth/logout
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX3V1aWQiOiJhZTQ1ZGZmOS04MWUxLTQ3MWQtOTE2Yy1hZmIwMTdhZWRhNWEiLCJlbWFpbCI6ImV4YW1wbGUyQGVtYWlsLmNvbSIsImlhdCI6MTcwNzEzOTkzMywiZXhwIjozNDE5NDYwMjY2fQ.ddt8bidssZLcDiJk3pO2-EyR3o9lg6qgFWFIxdS4OHU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX3V1aWQiOiJmZjVhYmI4Zi0zN2E3LTRlYzYtYjlmNS03NzE5OTM1MDViZDYiLCJlbWFpbCI6ImV4YW1wbGUzQGVtYWlsLmNvbSIsImlhdCI6MTcwNzU4OTkxNiwiZXhwIjozNDIwMzYwMjMyfQ.OMFJbzsnJoY2qlXECgeV0rHPBw5vdVJ7H5rQTPYYk8E
 
 ###
 # Verify Token

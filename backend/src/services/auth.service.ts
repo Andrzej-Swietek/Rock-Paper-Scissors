@@ -8,6 +8,7 @@ import {HttpException} from "@exceptions/HttpException";
 // Repositories
 import UserRepository from "@/repositories/user.repository";
 import OauthRepository from "@/repositories/oauth.repository";
+import TokenRepository from "@/repositories/token.repository";
 
 // Interfaces
 import {User} from "@interfaces/users.interface";
@@ -18,13 +19,14 @@ import TokenService from "@services/token.service";
 
 // Utils
 import {isEmpty} from "@utils/isEmpty";
-import userRepository from "@/repositories/user.repository";
+
 
 
 export default class AuthService {
 
   private readonly userRepository: UserRepository = new UserRepository();
   private readonly oauthRepository = new OauthRepository();
+  private readonly tokenRepository= new TokenRepository()
   private readonly tokenService = new TokenService();
 
   public async signup(userData: CreateUserDto): Promise<User> {
@@ -55,7 +57,7 @@ export default class AuthService {
     const isPasswordMatching: boolean = await compare(userData.password, foundUser.password) || userData.password == foundUser.password;
     if (!isPasswordMatching) throw new HttpException(409, "Your password is incorrect");
 
-    // TODO Revoke ones token
+    await this.tokenRepository.revokeUsersTokens(userData.uuid);
     return userData;
   }
 

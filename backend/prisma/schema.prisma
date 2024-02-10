@@ -36,6 +36,7 @@ model Token {
   token     String
   createdAt DateTime @default(now()) @map("created_at")
   user      User     @relation(fields: [userId], references: [uuid])
+  is_revoked Boolean @default(false)
 
   @@map("tokens")
 }
