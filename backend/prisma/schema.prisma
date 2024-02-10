@@ -1,0 +1,98 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  // uuid        String    @id @default(auto()) @map("_uuid")
+  uuid             String    @id @map("_uuid")
+  username         String    @unique
+  email            String    @unique
+  password         String
+  verificationCode String
+  verifiedAt       DateTime?
+  isVerified       Boolean
+
+  token     Token[]
+  userStats UserStats[]
+
+  OAuthClient      OAuthClient[]
+  OAuthAccessToken OAuthAccessToken[]
+  OAuthCode        OAuthCode[]
+
+  @@map("users")
+}
+
+model Token {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  token     String
+  createdAt DateTime @default(now()) @map("created_at")
+  user      User     @relation(fields: [userId], references: [uuid])
+  is_revoked Boolean @default(false)
+
+  @@map("tokens")
+}
+
+model UserStats {
+  id       Int    @id @unique @default(autoincrement())
+  userId   String
+  user     User   @relation(fields: [userId], references: [uuid])
+  rocks    Int
+  papers   Int
+  scissors Int
+  wins     Int
+  games    Int
+  points   Int
+  level    Int
+  exp      Int
+}
+
+model OAuthClient {
+  id           Int    @id @unique @default(autoincrement())
+  clientID     String
+  clientSecret String
+  // redirectUris String[]
+  redirectUri  String
+  // grants String[]
+  grants       String
+
+  user             User               @relation(fields: [userUuid], references: [uuid])
+  userUuid         String
+  OAuthAccessToken OAuthAccessToken[]
+  OAuthCode        OAuthCode[]
+}
+
+model OAuthAccessToken {
+  id Int @id @unique @default(autoincrement())
+
+  accessToken           String
+  accessTokenExpiresAt  DateTime
+  refreshToken          String
+  refreshTokenExpiresAt DateTime
+  scope                 String
+  userUUID              String
+  clientID              Int
+
+  user   User        @relation(fields: [userUUID], references: [uuid])
+  client OAuthClient @relation(fields: [clientID], references: [id])
+}
+
+model OAuthCode {
+  id                Int      @id @unique @default(autoincrement())
+  authorizationCode String
+  expiresAt         DateTime
+  scope             String
+  userUUID          String
+  clientID          Int
+
+  user   User        @relation(fields: [userUUID], references: [uuid])
+  client OAuthClient @relation(fields: [clientID], references: [id])
+}
