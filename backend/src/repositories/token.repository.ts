@@ -5,12 +5,10 @@ export default class TokenRepository {
   private readonly prisma = Prisma.getInstance();
 
 
-  public getToken(token: string) {
-    return this.prisma.token.findMany({
-      where: {
-        token: token,
-      },
-    })[0];
+  public async getToken(token: string) {
+    const tokens = await this.prisma.token.findMany({ where: { token: token } })
+    console.log(tokens, token)
+    return tokens[0];
   }
 
   public getUserTokens(userUUID: string) {

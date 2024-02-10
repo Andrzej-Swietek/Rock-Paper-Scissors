@@ -22,7 +22,7 @@ export default class TokenService {
   }
 
   public async getToken(token : string): Promise<Token> {
-    return this.tokenRepository.getToken(token);
+    return await this.tokenRepository.getToken(token);
   }
 
   public async getAccessToken(accessToken: any) {

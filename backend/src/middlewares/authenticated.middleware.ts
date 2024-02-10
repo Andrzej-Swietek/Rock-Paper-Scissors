@@ -7,31 +7,40 @@ import { DataStoredInToken, RequestWithUser } from '@interfaces/auth.interface';
 import {User} from "@interfaces/users.interface";
 
 import UserRepository from "@/repositories/user.repository";
+import TokenRepository from "@/repositories/token.repository";
 
 const authenticatedMiddleware = async (req: RequestWithUser, res: Response, next: NextFunction) => {
   try {
     const Authorization = req.cookies['Authorization'] || (req.header('Authorization') ? req.header('Authorization').split('Bearer ')[1] : null);
 
-    if (Authorization) {
-      const secretKey: string = SECRET_KEY;
-      const verificationResponse = (await verify(Authorization, secretKey)) as DataStoredInToken;
-      const userUuid = verificationResponse.user_uuid;
-      console.log(verificationResponse, userUuid)
+    if (!Authorization)
+      throw new HttpException(404, 'Authentication token missing');
 
-      const userRepository = new UserRepository();
-      const findUser: User = await userRepository.getUserByUUID(userUuid)
+    // Token Validity
+    const secretKey: string = SECRET_KEY;
+    const verificationResponse = (await verify(Authorization, secretKey)) as DataStoredInToken;
+    const userUuid = verificationResponse.user_uuid;
+    console.log(verificationResponse, userUuid)
 
-      if (findUser) {
-        req.user = findUser;
-        next();
-      } else {
-        next(new HttpException(401, 'Wrong authentication token'));
-      }
-    } else {
-      next(new HttpException(404, 'Authentication token missing'));
-    }
+    // Token Validity (Expired / Revoked)
+    const tokenRepository = new TokenRepository();
+    const token = await tokenRepository.getToken(Authorization);
+    if (!token || token.is_revoked)
+      throw new HttpException(401, 'Authentication token revoked or expired');
+
+
+    // User Validity
+    const userRepository = new UserRepository();
+    const user: User = await userRepository.getUserByUUID(userUuid)
+    if (!user)
+      throw new HttpException(401, 'User not found');
+
+
+    req.user = user;
+    next();
+
   } catch (error) {
-    next(new HttpException(401, 'Wrong authentication token'));
+    next(error instanceof HttpException ? error : new HttpException(401, 'Wrong authentication token'));
   }
 };
 

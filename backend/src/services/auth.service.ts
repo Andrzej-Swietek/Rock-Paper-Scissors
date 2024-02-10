@@ -39,8 +39,10 @@ export default class AuthService {
     console.log({ password, email });
     if (!email) throw new HttpException(400, 'Invalid request');
     const user: User = await this.userRepository.getUserByEmail(email);
+    console.log(user)
 
-    if (await this.userRepository.comparePasswords(user, password)) throw new HttpException(400, 'Invalid credentials');
+    const isValid = await this.userRepository.comparePasswords(user, password);
+    if (!isValid) throw new HttpException(400, 'Invalid credentials');
     if (!user.isVerified) throw new HttpException(401, 'Your account has not been verified.');
 
     return {
