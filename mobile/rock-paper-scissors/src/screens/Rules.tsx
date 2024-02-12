@@ -44,7 +44,10 @@ export const Rules: React.FC<RulesProps> = ({ route, navigation }) => {
                         <AboutItem key={index} item={item}/>
                     )
                 }}
-                />
+                ListFooterComponent={ <View style={{ height: WINDOW_HEIGHT/10 }} />}
+                >
+                    <View style={{ height: WINDOW_HEIGHT/5 }} />
+                </FlatList>
 
                 {/*<AboutItem item={{header:"Project description",description:"This is app is a modern implementation of the popular game of rock, paper and scissors.\nWe use AI to classify player's gestures."}}/>*/}
                 {/*<AboutItem item={{header:"How to play",description:"It is quite simple: when prompted, show a chosen gesture to the camera. Then wait for the result of the current round."}}/>*/}

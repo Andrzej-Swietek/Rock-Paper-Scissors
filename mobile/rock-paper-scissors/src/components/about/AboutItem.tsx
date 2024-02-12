@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useRef, useState} from "react";
 import {Animated, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View} from "react-native";
 import {
-    DIAMOND,
+    DIAMOND, FONT_SIZE_12,
     FONT_SIZE_14,
     FONT_SIZE_16,
     FONT_SIZE_24,
@@ -45,14 +45,21 @@ export const AboutItem: FC<{item: IAboutItem}> = ({ item }) => {
                 <Text style={styles.headerText}>{item?.header}</Text>
                 <AntDesign name={toggled?"up":"down"} size={20} color={WHITE} />
             </View>
-            <View style={styles.descriptionTextContainer}>
-                <Text style={styles.descriptionText}>{item?.description}</Text>
+            {
+                toggled ? (
+                    <View style={styles.descriptionTextContainer}>
+                        <Text style={[styles.descriptionText, { fontSize: toggled? FONT_SIZE_16 : FONT_SIZE_12 }]}>
+                            {item?.description.slice(0, toggled? item?.description.length : 50)}
+                            { !toggled && ' ...' }
+                        </Text>
+                    </View>
+                ) : null
+            }
+            <View>
+                <Row flex={{justifyContent: toggled? "center":"flex-end"}} customStyle={{ marginRight: 20 }}>
+                    <FontAwesome5 style={{marginVertical: 30, marginHorizontal: 10}} name={item.icon} size={48} color={WHITE} />
+                </Row>
             </View>
-            <Row>
-                <FontAwesome5 style={{marginVertical: 30, marginHorizontal: 10}} name={item.icon} size={48} color={WHITE} />
-                {/*<FontAwesome5 style={{marginVertical: 30, marginHorizontal: 10}} name="python" size={48} color={SECONDARY}  />*/}
-                {/*<FontAwesome5 style={{marginVertical: 30, marginHorizontal: 10}} name="react" size={48} color={SECONDARY} />*/}
-            </Row>
             </View>
     </TouchableWithoutFeedback>
         </Animated.View>
