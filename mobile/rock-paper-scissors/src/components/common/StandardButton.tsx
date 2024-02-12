@@ -1,6 +1,6 @@
 import React from 'react';
 import {TouchableOpacity, Text, View, StyleSheet, ViewStyle, StyleProp, TextStyle} from "react-native";
-import {boxShadow, LIGHT, PRIMARY} from "shared/styles";
+import {boxShadow, LIGHT, PRIMARY, SECONDARY} from "shared/styles";
 
 interface StandardButtonProps {
     text: string;
@@ -15,6 +15,18 @@ export const StandardButton: React.FC<StandardButtonProps> = ({text, onPress, cu
             {
                 <TouchableOpacity style={[ styles.button ]} onPress={ ()=> onPress() } disabled={ disabled }>
                     <Text style={[ styles.text ]}> { text } </Text>
+                </TouchableOpacity>
+            }
+        </View>
+    )
+}
+
+export const SecondaryButton: React.FC<StandardButtonProps> = ({text, onPress, customStyle, disabled}) => {
+    return (
+        <View style={styles.buttonWrapper}>
+            {
+                <TouchableOpacity style={[ styles.buttonSecondary ]} onPress={ ()=> onPress() } disabled={ disabled }>
+                    <Text style={[ styles.text, { color: PRIMARY } ]}> { text } </Text>
                 </TouchableOpacity>
             }
         </View>
@@ -41,6 +53,24 @@ const styles = StyleSheet.create({
         elevation: 3,
         height: 60,
         backgroundColor: PRIMARY,
+        width: '100%',
+        alignSelf: 'center',
+        zIndex: 1,
+        ...boxShadow('#000')
+        // flex: 1
+    },
+    buttonSecondary: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 12,
+        paddingHorizontal: 32,
+        borderRadius: 26,
+        elevation: 3,
+        height: 60,
+        // backgroundColor: SECONDARY,
+        backgroundColor: "transparent",
+        borderWidth: 2,
+        borderColor: PRIMARY,
         width: '100%',
         alignSelf: 'center',
         zIndex: 1,

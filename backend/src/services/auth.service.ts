@@ -35,10 +35,10 @@ export default class AuthService {
     return createdUser;
   }
 
-  public async loginUser(email: string, password: string): Promise<ILoginData> {
-    console.log({ password, email });
-    if (!email) throw new HttpException(400, 'Invalid request');
-    const user: User = await this.userRepository.getUserByEmail(email);
+  public async loginUser(username: string, password: string): Promise<ILoginData> {
+    console.log({ password, username });
+    if (!username) throw new HttpException(400, 'Invalid request');
+    const user: User = await this.userRepository.getUserByUsername(username);
     console.log(user)
 
     const isValid = await this.userRepository.comparePasswords(user, password);

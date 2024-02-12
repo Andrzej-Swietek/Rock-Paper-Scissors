@@ -33,6 +33,11 @@ export const StatsHeader: FC<{}> = ({}) => {
                 <Text style={styles.nickname}> { user.username } </Text>
             </View>
             <Row>
+                <View style={styles.level}>
+                    <Text style={styles.levelText}> {user.level} </Text>
+                </View>
+
+
                 <AntDesign style={{marginTop: 0}} name={'star'} size={24} color={PRIMARY} />
                 <Text style={styles.points}> { user.points } </Text>
                 <View style={styles.progressContainer}>
@@ -99,5 +104,26 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: FONT_SIZE_16,
         color: '#fff'
+    },
+    level: {
+        marginTop: 0,
+        marginRight: 10,
+        fontWeight: "bold",
+        fontSize: FONT_SIZE_16,
+        color: '#fff',
+        borderColor: '#fff',
+        borderRadius: 100,
+        borderWidth: 2
+    },
+    levelText: {
+        marginTop: 0,
+        marginRight: 5,
+        marginLeft: 5,
+        fontWeight: "bold",
+        fontSize: FONT_SIZE_16,
+        color: '#fff',
+        borderColor: '#fff',
+        borderRadius: 100,
+        borderWidth: 2
     }
 });
