@@ -97,6 +97,16 @@ class UserRepository {
     const isPasswordMatch: boolean = await compare(password, user.password);
     return isPasswordMatch;
   }
+
+  public async getUserProfile(username: string) {
+    return this.prisma.userStats.findFirst({
+      where: {
+        user: {
+          username
+        }
+      }
+    })
+  }
 }
 
 export default UserRepository;

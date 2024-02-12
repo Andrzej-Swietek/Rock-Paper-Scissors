@@ -8,22 +8,40 @@ import {
 } from "react-native";
 
 // Components
-import { StandardButton } from "components/common";
+import {SecondaryButton, StandardButton} from "components/common";
 
 // Styles
 import {LIGHT, PRIMARY, SECONDARY} from "shared/styles";
 import {FONT_SIZE_24} from "shared/styles";
 import {AuthContext} from "shared/providers";
+import {AuthNavProps} from "navigation/stacks/AuthStack/AuthParamList";
+import {UserService} from "shared/services";
 
-interface LoginProps {
+interface LoginProps extends AuthNavProps<'Login'>{
 }
 
-export const Login: React.FC<LoginProps> = ({}) => {
+export const Login: React.FC<LoginProps> = ({ navigation, route}) => {
     const [input, setInput] = useState('');
+    const [password, setPassword] = useState('');
     const { login } = useContext(AuthContext);
 
-    const submitLoginForm = () => {
-        login( input );
+    const submitLoginForm = async () => {
+        try {
+            const response = await UserService.login({
+                username: input,
+                password: password
+            });
+            console.log(response)
+
+            if (!response) {
+                alert('Unable to login. Try again');
+                return;
+            }
+
+            login( input );
+        } catch (e) {
+            /// TODO: ...
+        }
     }
 
     return (
@@ -43,7 +61,17 @@ export const Login: React.FC<LoginProps> = ({}) => {
                         placeholder="Username ..."
                     />
                 </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback >
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={ setPassword }
+                        value={ password }
+                        placeholder="Password ..."
+                        secureTextEntry={true}
+                    />
+                </TouchableWithoutFeedback>
                 <StandardButton text={'Sign In'} onPress={ ()=> submitLoginForm() } />
+                <SecondaryButton text={'Sign Up'} onPress={ ()=> navigation.navigate('Register') } />
             </View>
             <Image source={ require('../../assets/img/loginBlob.png') }  style={styles.image}/>
         </KeyboardAvoidingView>

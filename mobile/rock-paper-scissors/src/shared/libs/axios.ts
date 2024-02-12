@@ -40,7 +40,8 @@ const onResponse = (response: AxiosResponse): AxiosResponse => {
 };
 
 const onResponseError = (error: AxiosError): Promise<AxiosError> => {
-    console.log(`[response error] [${JSON.stringify(error)}]`);
+    console.log(`[response error] [${JSON.stringify(error, null, 4)}]`);
+    console.log(baseURL)
     return Promise.reject(error);
 };
 

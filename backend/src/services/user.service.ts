@@ -4,7 +4,7 @@ import { SALT, JWT_SECRET } from '@config';
 import jwt from 'jsonwebtoken';
 
 // Interfaces
-import {User} from "@interfaces/users.interface";
+import {User, UserStats} from "@interfaces/users.interface";
 
 // Exceptions
 import {HttpException} from "@exceptions/HttpException";
@@ -80,5 +80,14 @@ export default class UserService {
 
   public async comparePasswords(user: User, password: string): Promise<boolean> {
     return await this.userRepository.comparePasswords(user, password);
+  }
+
+  public async getUserProfile(username: string): Promise<{ user: User, profile: UserStats }> {
+    const [user, profile] = await Promise.all([
+      this.userRepository.getUserByUsername(username),
+      this.userRepository.getUserProfile(username)
+    ]);
+
+    return { user, profile }
   }
 }
