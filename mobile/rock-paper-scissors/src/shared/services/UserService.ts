@@ -1,5 +1,5 @@
 import axios from "shared/libs/axios";
-import {Token, User} from "shared/types";
+import {Token, User, UserStats} from "shared/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export interface UserCredentials {
@@ -13,26 +13,26 @@ export class UserService {
     public static validateUsername(username: string): boolean { return true }
 
     public static async createUser(user: UserCredentials) {
-        const response = await axios.post<User>(`/register`, user)
+        const response = await axios.post<User>(`/auth/register`, user)
         const data = response.data;
         return data;
     }
 
     public static async login(user: UserCredentials) {
-        const response = await axios.post<User&Token>(`/login`, {
+        const response = await axios.post<{user: User}&Token>(`/auth/login`, {
             username: user.username,
             password: user.password
         });
         const data = response.data;
 
         // Setting token for requests
-        await AsyncStorage.setItem('access_token', data.access_token);
+        await AsyncStorage.setItem('access_token', data.token);
 
         return data;
     }
 
     public static async logout(uuid: string) {
-        const response = await axios.post(`/logout`, {
+        const response = await axios.post(`/auth/logout`, {
             uuid: uuid
         });
         const data = response.data;
@@ -47,5 +47,9 @@ export class UserService {
         return data;
     }
 
-
+    public static async getUserProfile(username: string): Promise<{ user: User, profile: UserStats }> {
+        const response = await axios.get<{ user: User, profile: UserStats }>(`/user/profile/${username}`);
+        const data = response.data;
+        return data;
+    }
 }

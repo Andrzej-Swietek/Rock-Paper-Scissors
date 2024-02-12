@@ -5,8 +5,8 @@ describe('WS TEST', ()=> {
     test('Connection', ()=>{
         const socket = io(WS_SERVER)
         socket.emit('chat', "test");
-        socket.on('hello',()=>{
-
+        socket.on('hello',(e)=>{
+            console.log("HELLO: " + e)
         })
     })
 })

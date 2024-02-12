@@ -8,5 +8,5 @@ export type User = {
 }
 
 export type Token =  {
-    access_token: string
+    token: string
 }

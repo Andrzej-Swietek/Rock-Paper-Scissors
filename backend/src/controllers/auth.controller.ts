@@ -89,9 +89,9 @@ class AuthController {
 
   public login = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { email, password } = req.body;
+      const { username, password } = req.body;
 
-      const { user, token } = await this.authService.loginUser(email, password);
+      const { user, token } = await this.authService.loginUser(username, password);
       if (!user) return res.status(404);
 
       if (!user.isVerified) return res.status(401).json({ type: 'not-verified', message: 'Your account has not been verified.' });

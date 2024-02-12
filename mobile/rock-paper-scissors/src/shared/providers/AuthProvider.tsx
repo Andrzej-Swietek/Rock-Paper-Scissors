@@ -27,16 +27,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       <AuthContext.Provider value={{
         user,
         login: async(username: string): Promise<void> => {
-         const u = JSON.parse( await AsyncStorage.getItem('user') )
-          const userFromAPI: User = {
+            const u = JSON.parse( await AsyncStorage.getItem('user') )
+            const userProfile = await UserService.getUserProfile(username);
+            const userFromAPI: User = userProfile.user ?? {
               username: username,
               points: 0,
               gamesPlayed: 0,
               level: 1,
               exp: 0
-          };
-          setUser(u? u : userFromAPI)
-          await AsyncStorage.setItem('user', JSON.stringify(userFromAPI))
+            };
+            setUser(u? u : userFromAPI)
+            await AsyncStorage.setItem('user', JSON.stringify(userFromAPI))
         },
         logout: async (): Promise<void> => {
           await UserService.logout(user.uuid);

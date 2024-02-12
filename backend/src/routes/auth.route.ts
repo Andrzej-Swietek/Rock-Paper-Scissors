@@ -27,7 +27,7 @@ class AuthRoute implements Routes {
     this.router.post(`${this.path}/register`, validationMiddleware(CreateUserDto, 'body'),  this.authController.register);
     this.router.post(
       `${this.path}/login`,
-      check('email').isEmail().withMessage('Enter a valid email address'),
+      check('username').isEmail().withMessage('Enter a valid email address'),
       check('password').not().isEmpty(),
       this.authController.login
     );
