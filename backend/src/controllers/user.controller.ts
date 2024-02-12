@@ -47,6 +47,21 @@ class UserController {
       next(error);
     }
   }
+
+  public getUserStats = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { profile } = await this.userService.getUserProfile(req.params.username);
+      res.status(200).send({
+        data: {
+          profile
+        },
+        message: 'success'
+      })
+
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default UserController;

@@ -8,6 +8,30 @@ export interface UserCredentials {
     password: string;
 }
 
+export interface UserProfileResponse {
+    user: {
+        uuid: string,
+        username: string,
+        email: string,
+        password: string,
+        verificationCode?: string,
+        verifiedAt?: string|null,
+        isVerified: boolean
+    },
+    profile: {
+        id: number,
+        userId: string,
+        rocks: number,
+        papers: number,
+        scissors: number,
+        wins: number,
+        games: number,
+        points: number,
+        level: number,
+        exp: number
+    }
+}
+
 export class UserService {
 
     public static validateUsername(username: string): boolean { return true }
@@ -47,9 +71,15 @@ export class UserService {
         return data;
     }
 
-    public static async getUserProfile(username: string): Promise<{ user: User, profile: UserStats }> {
-        const response = await axios.get<{ user: User, profile: UserStats }>(`/user/profile/${username}`);
+    public static async getUserProfile(username: string): Promise<UserProfileResponse> {
+        const response = await axios.get<{data: UserProfileResponse}>(`/user/profile/${username}`);
         const data = response.data;
-        return data;
+        return data.data as UserProfileResponse;
+    }
+
+    public static async getUserStats(username: string): Promise<UserStats> {
+        const response = await axios.get<{data: { user: User, profile: UserStats }}>(`/user/stats/${username}`);
+        const data = response.data;
+        return data.data.profile;
     }
 }

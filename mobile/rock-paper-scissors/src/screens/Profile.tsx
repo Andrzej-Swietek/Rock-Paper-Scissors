@@ -37,7 +37,7 @@ export const Profile: React.FC<SettingsProps> = ({ route, navigation }) => {
 
     const { isPending, isError, data, error } = useQuery({
         queryKey: ["user-stats"],
-        queryFn: () => StatsService.getUserStats(''),
+        queryFn: () => StatsService.getUserStats(user.username),
         // refetchInterval: 1000,
     });
 

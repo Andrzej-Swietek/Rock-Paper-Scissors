@@ -3,12 +3,14 @@ import axios from "shared/libs/axios";
 
 export class StatsService {
 
-    public static async getUserStats(user_uuid: string): Promise<UserStats> {
+    public static async getUserStats(username: string): Promise<UserStats> {
         try {
-            const response = await axios.get<UserStats>(`/user-stats${user_uuid}`)
+            const response = await axios.get<{
+                data: { profile: UserStats }
+            }>(`/user/stats/${username}`)
             const data = response.data;
 
-            return data;
+            return data.data.profile;
         } catch (e: any) {
             // TODO: REMOVE MOCK
             return {

@@ -22,6 +22,7 @@ class UserRoute implements Routes {
     this.router.get(`${this.path}/all`,  authenticatedMiddleware, this.userController.getUsers)
     this.router.get(`${this.path}/:id`,  authenticatedMiddleware, this.userController.getUser)
     this.router.get(`${this.path}/profile/:username`,  authenticatedMiddleware, this.userController.getUserProfile)
+    this.router.get(`${this.path}/stats/:username`, this.userController.getUserStats)
   }
 }
 
