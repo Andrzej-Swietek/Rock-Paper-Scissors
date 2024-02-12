@@ -1,0 +1,34 @@
+# baseURL
+@baseURL = http://localhost:3030/auth
+
+###
+# User Signup
+POST http://localhost:3030/auth/register
+Content-Type: application/json
+
+{
+  "username": "user2",
+  "email": "example2@email.com",
+  "password": "pass2"
+}
+
+###
+# User Index
+POST http://localhost:3030/auth/login
+Content-Type: application/json
+
+{
+  "email": "example2@email.com",
+  "password": "pass2"
+}
+
+###
+# User Logout
+POST http://localhost:3030/auth/logout
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX3V1aWQiOiJkMzY3NWY3My1lMWZkLTRmZjQtOTgyOC1kYmEyZDFhMTY2N2YiLCJlbWFpbCI6ImV4YW1wbGUyQGVtYWlsLmNvbSIsImlhdCI6MTcwNzU5NDk0NywiZXhwIjozNDIwMzcwMjk0fQ.WnXlNL8x0gO__kxMzYyoAoPResBTrHIG7iSNg_0iFy8
+
+###
+# Verify Token
+GET http://localhost:3030/auth/verify/xxx
+Content-Type: application/json

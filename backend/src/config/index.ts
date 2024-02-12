@@ -3,4 +3,16 @@ config({ path: `.env.${process.env.NODE_ENV || 'development'}.local` });
 
 export const CREDENTIALS = process.env.CREDENTIALS === 'true';
 
-export const { NODE_ENV, PORT, DB_HOST, DB_PORT, DB_DATABASE, SECRET_KEY, ORIGIN, LOG_DIR, LOG_FORMAT } = process.env;
+export const {
+  NODE_ENV,
+  PORT,
+  DB_HOST,
+  DB_PORT,
+  DB_DATABASE,
+  SECRET_KEY,
+  ORIGIN,
+  LOG_DIR,
+  LOG_FORMAT,
+  SALT,
+  JWT_SECRET
+} = process.env;
