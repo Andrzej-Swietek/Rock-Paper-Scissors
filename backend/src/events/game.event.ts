@@ -26,6 +26,17 @@ export class GameEvent {
 
   }
 
+  public static joinPrivateRoom(socket: Socket) {
+
+  }
+
+  public static createPrivateRoom(socket: Socket) {
+
+  }
+
+  public static joinRandomRoom(socket: Socket) {
+
+  }
 
   public static handleMove = (socket: Socket, data: IMove) => {
       // const room = data.room;
