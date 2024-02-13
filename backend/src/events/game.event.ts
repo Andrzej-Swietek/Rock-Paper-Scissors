@@ -26,16 +26,22 @@ export class GameEvent {
 
   }
 
-  public static joinPrivateRoom(socket: Socket) {
-
+  public static joinPrivateRoom(socket: Socket, data: { roomCode: string }) {
+    // TODO: Check if exists
+    // TODO: JOIN + db update
+    // TODO: broadcast to room that joined
   }
 
   public static createPrivateRoom(socket: Socket) {
-
+    // TODO: Check if exists
+    // TODO: CREATE + JOIN + db update
+    // TODO: broadcast to room that joined
   }
 
   public static joinRandomRoom(socket: Socket) {
-
+    // TODO: check if there is any pending that has mode non private
+    // IF SO:  JOIN And broadcast joining and game start
+    // ELSE:  CREATE + JOIN + db update + wait
   }
 
   public static handleMove = (socket: Socket, data: IMove) => {
@@ -67,6 +73,7 @@ export class GameEvent {
   public static leaveRoom = (socket: Socket , data:any) => {
     const room = Array.from(socket.rooms).find((room) => room !== socket.id && room !== "");
     socket.leave(room);
+    // TODO DB UPDATE + BROADCAST "buddy's left" / "forfeit"
   }
 
 }
