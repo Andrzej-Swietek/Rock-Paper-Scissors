@@ -2,7 +2,7 @@ import React from 'react';
 import {CardStyleInterpolators, createStackNavigator} from "@react-navigation/stack";
 import {InfoParamList} from "./InfoParamList";
 import {AboutProject} from "screens/AboutProject";
-import {Rules} from "screens/Rules";
+import {About} from "screens/About";
 
 interface InfoStackProps {
 }
@@ -18,7 +18,7 @@ export const InfoStack: React.FC<InfoStackProps> = ({}) => {
                 cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
             }}
         >
-            <Stack.Screen name={'rules'} component={Rules} />
+            <Stack.Screen name={'about'} component={About} />
             <Stack.Screen name={'aboutProject'} component={AboutProject} />
         </Stack.Navigator>
     )

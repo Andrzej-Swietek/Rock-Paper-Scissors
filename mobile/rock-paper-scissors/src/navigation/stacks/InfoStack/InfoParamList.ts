@@ -2,7 +2,7 @@ import {StackNavigationProp} from "@react-navigation/stack";
 import {RouteProp} from "@react-navigation/native";
 
 export type InfoParamList = {
-    rules: undefined,
+    about: undefined,
     aboutProject: undefined,
 }
 

@@ -3,7 +3,7 @@ import {CardStyleInterpolators, createStackNavigator} from "@react-navigation/st
 import {UserParamList} from "./UserParamList";
 
 // Screens
-import {Rules} from "screens/Rules";
+import {About} from "screens/About";
 import {Settings} from "screens/Settings";
 import {Profile} from "screens/Profile";
 
