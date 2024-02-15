@@ -15,11 +15,36 @@ class GameRoomRepository {
       })
   }
 
-  public async createRoom() { }
+  public async createRoom(roomId: string, mode: string, state: string) {
+    return this.prisma.gameRoom.create({
+      data: {
+        roomId: roomId,
+        mode,
+        state
+      }
+    });
+  }
 
-  public async addUserToRoom() { }
+  public async addUserToRoom(roomID: string, userID: string) {
+    return this.prisma.gameRoom.update({
+      where: { roomId: roomID },
+      data: {
+        players: {
+          connect: { uuid: userID }
+        }
+      }
+    });
+  }
 
-  public async editRoom() { }
+  public async editRoom(roomID: string, mode: string, state: string) {
+    return this.prisma.gameRoom.update({
+      where: { roomId: roomID },
+      data: {
+        mode,
+        state
+      }
+    });
+  }
 
   public async removeRoom(roomID: string) {
       return this.prisma.gameRoom.delete({
@@ -29,3 +54,5 @@ class GameRoomRepository {
       });
   }
 }
+
+export default GameRoomRepository;
