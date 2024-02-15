@@ -47,7 +47,8 @@ export const LobbySlider: FC<LobbySliderProps> = ({ modes }) => {
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    zIndex: 9000
                 }}
                 snapToInterval={ITEM_SIZE}
                 decelerationRate={Platform.OS === 'ios' ? 0 : 0.98}
