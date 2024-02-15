@@ -3,8 +3,6 @@ import {Animated, StyleSheet, Text, TouchableWithoutFeedback, View} from "react-
 
 // Styles
 import {
-    FONT_SIZE_12,
-    FONT_SIZE_14,
     FONT_SIZE_16,
     FONT_SIZE_24,
     SECONDARY,
@@ -16,33 +14,34 @@ import {AntDesign, FontAwesome5} from "@expo/vector-icons";
 import {Row} from "components/common";
 
 interface IAboutItem {
-    id?:number,
-    header?:string,
+    id?: number,
+    header?: string,
     description?: string,
-    icons?:string[]
-    // children: React.ReactNode;
+    icons?: string[]
 }
 
 export const AboutItem: FC<{item: IAboutItem}> = ({ item }) => {
     let [toggled, setToggled] = useState(false);
+    let [descLines, setDescLines] = useState(0);
+
     const height = useRef(new Animated.Value(0)).current;
     useEffect(() => {
         Animated.timing(height, {
             toValue: toggled ? 1 : 0,
-            duration: 200,
+            duration: 180,
             useNativeDriver: false,
         }).start();
     }, [toggled]);
 
     const componentHeight = height.interpolate({
         inputRange: [0, 1],
-        outputRange: [WINDOW_HEIGHT/5, WINDOW_HEIGHT* (3/7)],
+        outputRange: [WINDOW_HEIGHT/5,  WINDOW_HEIGHT * (3/12) + WINDOW_HEIGHT * (descLines/27)],
     });
 
     return (
         <Animated.View style={[styles.aboutItemContainer, {height: componentHeight}]}>
         <TouchableWithoutFeedback onPress={() => {setToggled((prev) => !prev)}} style={{flex:1}}>
-            <View>
+        <View>
             <View style={styles.headerTextContainer}>
                 <Text style={styles.headerText}>{item?.header}</Text>
                 <AntDesign name={toggled?"up":"down"} size={20} color={WHITE} />
@@ -51,7 +50,9 @@ export const AboutItem: FC<{item: IAboutItem}> = ({ item }) => {
             {
                 toggled ? (
                     <View style={styles.descriptionTextContainer}>
-                        <Text style={[styles.descriptionText, { fontSize: FONT_SIZE_16 }]}>
+                        <Text style={styles.descriptionText}
+                            onTextLayout={(e)=>{setDescLines(e.nativeEvent.lines.length)}}
+                        >
                             {item?.description}
                             {/*{ !toggled && ' ...' }*/}
                         </Text>
@@ -59,16 +60,16 @@ export const AboutItem: FC<{item: IAboutItem}> = ({ item }) => {
                 ) : null
             }
             <View>
-                <Row flex={{justifyContent: toggled? "center":"flex-end"}} customStyle={{ marginRight: toggled? 0 : 20}}>
+                <Row flex={{justifyContent: toggled ? "center" : "flex-end", alignItems: "center"}} customStyle={{marginRight: toggled? 0 : 20}}>
                     {
                         item.icons.map((icon, i) => {
-                            return <FontAwesome5 key={i} style={{marginVertical: 30, marginHorizontal: 10}} name={icon} size={48} color={WHITE} />
+                            return <FontAwesome5 key={i} style={{marginVertical: 30, marginHorizontal: 10}} name={icon} size={48} color={WHITE}/>
                         })
                     }
                 </Row>
             </View>
-            </View>
-    </TouchableWithoutFeedback>
+        </View>
+        </TouchableWithoutFeedback>
         </Animated.View>
     )
 }
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
     },
     descriptionText: {
         color: WHITE,
-        fontSize: FONT_SIZE_14,
+        fontSize: FONT_SIZE_16,
         fontFamily: 'Roboto'
     }
 });
