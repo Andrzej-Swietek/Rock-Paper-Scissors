@@ -106,4 +106,6 @@ model GameRoom {
   mode      String
   state     String
   createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("gameRoom")
 }
